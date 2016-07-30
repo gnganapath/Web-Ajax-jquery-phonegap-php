@@ -1,0 +1,39 @@
+<?php
+ ob_start();
+ mysql_connect('localhost','root','');  // domain name,db user name,db password
+ mysql_select_db('test');
+ $sql = "SELECT * from TableName";     // table name
+ $res = mysql_query( $sql) or die();
+ $count = mysql_num_fields($res);
+
+ // fetch table header from database
+ $header = '';
+ for ($i = 0; $i < $count; $i++){
+    $header .= mysql_field_name($res, $i)."\t";
+    }
+
+ // fetch data each row, store on tabular row data
+ while($row = mysql_fetch_row($res)){
+   $line = '';
+   foreach($row as $value){
+   if(!isset($value) || $value == ""){
+     $value = "\t";
+   }else{
+     $value = str_replace('"', '""', $value);
+     $value = '"' . $value . '"' . "\t";
+   }
+   $line .= $value;
+   }
+   $data .= trim($line)."\n";
+   $data = str_replace("\r", "", $data);
+  }
+ 
+ $name=date('d-m-y').'corp.xls';  	// downloaded file name
+header("Content-type:application/vnd.ms-excel;name='excel'");
+ header("Content-Disposition: attachment; filename=$name");
+ header("Pragma: no-cache");
+ header("Expires: 0");
+
+ // Output data
+ echo $header."\n\n".$data;
+ ?>

@@ -1,0 +1,481 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>jQuery Mobile Web App</title>
+<!-- <link href="jquery-mobile/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css"/>
+<script src="jquery-mobile/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="jquery-mobile/jquery.mobile-1.0.min.js" type="text/javascript"></script> -->
+
+ <link rel="stylesheet"  href="css/jquery.mobile-1.2.0.min.css" />
+ <link rel="stylesheet" href="css/jqm-datebox.min.css" /> 
+    <script src="css/jquery-1.8.0.min.js"></script>
+    <script src="css/jquery.mobile-1.2.0.min.js"></script>
+    <script src="js/jqm-datebox.core.min.js"></script>
+  <script src="js/jqm-datebox.mode.calbox.min.js"></script>
+    
+<script type="text/javascript" src="cordova-2.7.0.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(e) 
+ {
+	//alert(1);
+	$('#select-date option[value="-1"]').attr('selected',true);
+	$('#select-doctor option[value="-1"]').attr('selected',true);
+	$('#select-specialist option[value="-1"]').attr('selected',true);
+	
+	$.ajax({
+		  // url: url+"internaltracking.php",
+		  url:'http://192.168.1.36:9090/hms/booking.php',
+		   type:"GET",
+		  // data:datavalue,
+		   timeout: 10000,
+		   headers: { "cache-control": "no-cache" },
+		    contentType: 'application/json; charset=utf-8',
+		    dataType: "json",
+		   cache:false,
+		   success: function(data) {
+				//alert(data);
+			//alert(data[0].spid);
+				//alert(data[0].spdesc);
+				//alert(data[0].day);
+				  // $("#namelist option:not(:first)").remove();
+				 	
+				   $.each(data, function(key, val) {
+					
+					   	var spid= val.spid;
+						var spdesc=val.spdesc;
+									
+					   $("#select-spcialist").append($('<option>', { value : spid }).text(val.spdesc));
+					   
+					//   alert(spid);
+					  		 
+				
+					  });
+	          // count++;
+	           if(count==2){
+	           $.mobile.hidePageLoadingMsg();
+	           }
+		   
+				   $("#namelist").selectmenu('refresh');
+		  
+	  
+				  },	 error:function(x, t, m)
+		        {
+		            if(t=="timeout") {
+		          	  navigator.notification.alert("Your Data connection is too slow", alertCallback,  "Alert");   
+		            } else {
+		          	  navigator.notification.alert("Check Internet Connectivity", alertCallback,  "Alert");   
+		            }
+		        }
+		 });
+	
+	
+	$("#select-spcialist").live('change',function()  
+			{
+				
+				var specid=$(this).attr('value');
+				
+				datavalue='did='+specid;
+				//alert(datavalue);
+				$.ajax({
+					  // url: url+"internaltracking.php",
+					  url:'http://192.168.1.36:9090/hms/booking2.php',
+					   type:"GET",
+					  data:datavalue,
+					   timeout: 10000,
+					   headers: { "cache-control": "no-cache" },
+					    contentType: 'application/json; charset=utf-8',
+					    dataType: "json",
+					   cache:false,
+					   success: function(data) {
+							//alert(data);
+							//alert(data[0].did);
+							//alert(data[0].dname);
+							//alert(data[0].day);
+							
+							
+							$('#select-doctor option[value="-1"]').attr('selected',true);
+							   $("#select-doctor option:not(:first)").remove();
+							   
+							   $('#select-date option[value="-1"]').attr('selected',true);
+							   $("#select-date option:not(:first)").remove();
+							 	
+							   $.each(data, function(key, val) {
+								
+								   	var did= val.did;
+									var dname=val.dname;
+												
+								   $("#select-doctor").append($('<option>', { value : did }).text(val.dname));
+								   
+								//   alert(spid);
+								  		 
+							
+								  });
+							   $("#select-doctor").selectmenu('refresh');
+							   $("#select-date").selectmenu('refresh');
+							   
+				          // count++;
+				           if(count==2){
+				           $.mobile.hidePageLoadingMsg();
+				           }
+					   
+							   $("#namelist").selectmenu('refresh');
+					  
+				  
+							  },	 error:function(x, t, m)
+					        {
+					            if(t=="timeout") {
+					          	  navigator.notification.alert("Your Data connection is too slow", alertCallback,  "Alert");   
+					            } else {
+					          	  navigator.notification.alert("Check Internet Connectivity", alertCallback,  "Alert");   
+					            }
+					        }
+					 });
+			});  
+			
+			
+			
+			 $("#select-doctor").live('change',function()  
+			{
+				
+				var dateid=$(this).attr('value');
+			//	alert('date');
+				datavalue='dateid='+dateid;
+				//alert(datavalue);
+				$.ajax({
+					  // url: url+"internaltracking.php",
+					  url:'http://192.168.1.36:9090/hms/booking3.php',
+					   type:"GET",
+					  data:datavalue,
+					   timeout: 10000,
+					   headers: { "cache-control": "no-cache" },
+					    contentType: 'application/json; charset=utf-8',
+					    dataType: "json",
+					   cache:false,
+					   success: function(data) {
+						//	alert(data);
+						//	alert(data[0].appdateid);
+					//	alert(data[0].appdate);
+							//alert(data[0].day);
+							$('#select-date option[value="-1"]').attr('selected',true);
+							   $("#select-date option:not(:first)").remove();
+							 	
+							   $.each(data, function(key, val) {
+								
+								   	var appdateid= val.appdateid;
+									var appdate=val.appdate;
+												
+								   $("#select-date").append($('<option>', { value : appdateid }).text(val.appdate));
+								   
+								//   alert(spid);
+								  		 
+							
+								  });
+							   $("#select-date").selectmenu('refresh');
+				          // count++;
+				           if(count==2){
+				           $.mobile.hidePageLoadingMsg();
+				           }
+					   
+							 //  $("#namelist").selectmenu('refresh');
+					  
+				  
+							  },	 error:function(x, t, m)
+					        {
+					            if(t=="timeout") {
+					          	  navigator.notification.alert("Your Data connection is too slow", alertCallback,  "Alert");   
+					            } else {
+					          	  navigator.notification.alert("Check Internet Connectivity", alertCallback,  "Alert");   
+					            }
+					        }
+					 });
+			});  
+	
+	});
+
+
+
+</script>
+
+<script>
+  //reset type=date inputs to text
+  $( document ).bind( "mobileinit", function(){
+    $.mobile.page.prototype.options.degradeInputs.date = true;
+  });	
+</script>
+
+<script type="text/javascript">
+
+
+function bookappoinment()
+{
+
+var sp=$('#select-spcialist  option:selected').text();
+var doc=$('#select-doctor option:selected').text();
+var dat=$('#select-date option:selected').text();
+var tim=$('#select-time option:selected').text();
+
+/* alert(sp);
+alert(doc);
+alert(dat);
+alert(tim); */
+
+
+$("#bookconform").append('<table><tr><td>&nbsp;'+sp+'</td><td>&nbsp;'+doc+'</td><td>&nbsp;'+dat+'</td><td>&nbsp;'+tim+'</td></tr></table>');
+
+//window.location="pdash.html";	
+	
+}
+</script>
+
+</head> 
+<body> 
+<div data-role="page" id="pappoinment">
+<div data-role="header" data-theme="b">
+<a href="#" data-icon="back" data-rel="back" title="Go back"></a>
+<img src="images/logo2.png" style="height:37px;alt="logo" class="center" />
+<!-- <a href="pdash.html" data-icon="home" >Home</a>
+ -->
+</div>
+<div data-role="content">	
+    <p align="center" >Out Patient Appointment</p>
+    <style>
+.center
+{
+display:block ;
+margin-left:auto ;
+margin-right:auto ;
+
+}
+
+#forgot{
+vertical-align:middle;
+}
+/*.inset
+{
+	 margin: 0px auto;
+    max-width: 90%;
+	margin-top: 5px;
+	background:#CCC;
+	text-shadow:none;
+	
+	font-size:14px;
+    border-radius: 0.6em 0.6em 0.6em 0.6em;
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.7);
+    margin-bottom: 5px;
+    padding: 17px ;
+    padding-bottom: 8px;}
+	*/
+	
+	</style>
+	<div class="inset" data-theme="b">
+    
+	 <form name="pregister" method="post" action="javascript():pbookappointment();">
+ <fieldset data-role="controlgroup" id="pdoctorspecality">
+   <div data-role="navbar" id="id99">
+		<ul>
+			<li><a href="#" class="ui-btn-active">Out Patient</a></li>
+			<li><a href="#">In Patient</a></li>
+			
+		</ul>
+	</div><!-- /navbar -->
+    <style>
+	#id99
+	{border:#333;
+	border-width:medium;}
+	</style>
+    
+    
+    <label>Speciality :</label>
+    <select name="select-native-5" id="select-spcialist">
+<option value="-1">Select Speciality</option>
+       
+    </select>
+   
+     <label>Doctor Name</label>
+    <select name="select-native-6" id="select-doctor">
+   
+        <option value="-1">Select Doctor</option>
+        
+    </select>
+    
+        
+    <label>Prepared Date</label>
+    <select name="select-native-7" id="select-date">
+        <option value="-1">Select Date</option>
+        
+    </select>
+    
+    <label>Prepared Time</label>
+    <select name="select-native-7" id="select-time" onchange="bookappoinment()">
+    
+        <option value="#">slot 1</option>
+        <option value="#">slot 2</option>
+        <option value="#">slot 3</option>
+        <option value="#">slot 4</option>
+        <option value="#">slot 5</option>
+        <option value="#">slot 6</option>
+    </select>
+</fieldset>
+<!--<table data-role="table" id="table-column-toggle" data-mode="columntoggle" class="ui-responsive table-stroke">
+     <thead>
+       <tr>
+         <th data-priority="2">Date</th>
+         <th>Time</th>
+         <th data-priority="3">Room No</th>
+         <th data-priority="1"><abbr title="Rotten Tomato Rating">Rating</abbr></th>
+         <th data-priority="5">Reviews</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr>
+         <th>1</th>
+         <td>Citizen Kane</a></td>
+         <td>1941</td>
+         <td>100%</td>
+         <td>74</td>
+       </tr>
+       <tr>
+         <th>2</th>
+         <td>Casablanca</a></td>
+         <td>1942</td>
+         <td>97%</td>
+         <td>64</td>
+       </tr>
+       <tr>
+         <th>3</th>
+         <td>The Godfather</a></td>
+         <td>1972</td>
+         <td>97%</td>
+         <td>87</td>
+       </tr>
+       <tr>
+         <th>4</th>
+         <td> Wind</a></td>
+         <td>1939</td>
+         <td>96%</td>
+         <td>87</td>
+       </tr>
+       <tr>
+         <th>5</th>
+         <td> Arabia</a></td>
+         <td>1962</td>
+         <td>94%</td>
+         <td>87</td>
+       </tr>
+       <tr>
+         <th>6</th>
+         <td>Bomb</a></td>
+         <td>1964</td>
+         <td>92%</td>
+         <td>74</td>
+       </tr>
+       <tr>
+         <th>7</th>
+         <td> Graduate</a></td>
+         <td>1967</td>
+         <td>91%</td>
+         <td>122</td>
+       </tr>
+       <tr>
+         <th>8</th>
+         <td> Oz</a></td>
+         <td>1939</td>
+         <td>90%</td>
+         <td>72</td>
+       </tr>
+       <tr>
+         <th>9</th>
+         <td> Rain</a></td>
+         <td>1952</td>
+         <td>89%</td>
+         <td>85</td>
+       </tr>
+       <tr>
+         <th>10</th>
+         <td class="title">Inception</a></td>
+         <td>2010</td>
+         <td>84%</td>
+         <td>78</td>
+       </tr>
+     </tbody>
+   </table>
+-->      
+     <p>
+    <a href="#" data-rel="back" data-role="button"  data-inline="true" style="background:DodgerBlue;color:white;">Back</a>
+    <!-- <a href="pdash.html" data-role="button"  data-inline="true"  style="background:green;color:white;" >Book Now</a>
+     -->
+    <a href="#dialog" data-rel="popup" data-position-to="window" data-role="button" data-transition="pop" data-inline="true" style="background:green;color:white;">Book Now</a>
+<div data-role="popup" id="dialog" data-overlay-theme="a" data-theme="c">
+    <div data-role="header" data-theme="d">
+        <h1>Conform</h1>
+    </div>
+    <div data-role="content" data-theme="d">
+        <h3 id='bookconform'></h3>
+        <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">No</a>    
+        <a href="pdash.html" data-role="button" data-inline="true" data-rel="external" data-theme="b">Yes, Book it</a>  
+    </div>
+    <div data-role="footer" data-theme="d">
+        <h1>Thanks...</h1>
+    </div>
+</div><!-- Dialog div end-->
+    <hr>
+   
+    
+    </p>
+    
+     
+</form>	
+</div>	
+	</div>
+	
+</div> <!--Page end tag -->
+
+
+</body>
+</html>
+
+
+
+
+
+
+==========================
+
+result of php file
+http://192.168.1.36:9090/hms/booking.php
+
+[{"spid":"1","spdesc":"Ayurveda"},{"spid":"5","spdesc":"Cancer Care"},
+{"spid":"6","spdesc":"Cardiac Surgery"},{"spid":"8","spdesc":"Cardiology"},
+{"spid":"9","spdesc":"Dental,clinical, oral and Maxi"},
+{"spid":"10","spdesc":"Emergency Medical Service"},
+{"spid":"11","spdesc":"Ent "},{"spid":"12","spdesc":"Family Medicine"},
+{"spid":"13","spdesc":"Gastroenterology"},
+{"spid":"14","spdesc":"General Surgery"},
+{"spid":"15","spdesc":"High Risk Pregnancy and Fetal "},
+{"spid":"16","spdesc":"Neonatology"},
+{"spid":"7","spdesc":"Obesity Clinic"},
+{"spid":"3","spdesc":"Physiotherapy"},
+{"spid":"4","spdesc":"Thoracic "},
+{"spid":"2","spdesc":"Urology"}]
+
+----------------------------------------------------------------------------------
+
+result of php file
+http://192.168.1.36:9090/hms/booking2.php
+
+[{"did":"7","dname":"Dr. Aleyamma Joseph"}]
+
+----------------------------------------------------------------------------------
+
+result of php file
+http://192.168.1.36:9090/hms/booking3.php
+
+
+[{"appdateid":"7","appdate":"121 dec 2013"}]
+---------------------------------------------------------------------------------
+
+
+
+

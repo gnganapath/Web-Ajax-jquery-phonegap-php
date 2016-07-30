@@ -1,0 +1,59 @@
+How to iterate through multiple rows in jquery using ajax, json, and php
+=========================================================================
+REF LINK : http://stackoverflow.com/questions/8449860/how-to-iterate-through-multiple-rows-in-jquery-using-ajax-json-and-php
+
+
+I have a php page that returns json like this:
+
+while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+        $rows[] = $row;
+}
+print json_encode($rows);
+
+When I run the php page I get back something like:
+
+[{"phone":"1234567"},{"phone":"1234567"}]
+
+ $.ajax({
+        url: 'test.php',
+        type: 'POST',
+        dataType: 'json',
+        contentType: "application/json; charset=utf-8",
+        success: function(response) {
+
+             $.each(response, function() { 
+                $.each(this, function(key, value){
+                    alert(key + " --> " + value); 
+                });
+            });
+
+        }
+   });
+
+});
+
+I got that from another SO question. This will give me my keys and value in the alert. This was just for me to make sure everything works. I have searched but cannot figure out how to just get one value. Say I wanted the name, what do I put? I have tried:
+
+success: function(response) {
+ var obj = $.parseJSON(response);
+ alert( obj.phone );
+}
+
+But since it is multiple rows it won't work unless I have, and it also fails when I have one row like this:
+
+echo json_encode(array("phone" => "123")
+
+
+3 Answers
+============
+
+The response variable is an array of objects. To access a single index in your response variable:
+
+var phone = response[0].phone;//replace `0` with the index you want
+If you end-up iterating through your response in a loop make sure to do it like this for the best performance:
+
+var len = response.length;
+for (var i = 0; i < len; i++) {
+    console.log(response[i].phone);
+}
+Check-out this jsperf to see how much faster this type of loop is than for(i in array): http://jsperf.com/for-in-tests

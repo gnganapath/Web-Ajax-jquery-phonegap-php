@@ -1,0 +1,12 @@
+
+
+<?php
+$array = array(1, "hello", 1, "world", "hello");
+$new=array_filter(array_count_values($array),'custom_filter');
+print_r($new);
+function custom_filter($val)
+{
+  return $val > 1; 
+}
+
+?>

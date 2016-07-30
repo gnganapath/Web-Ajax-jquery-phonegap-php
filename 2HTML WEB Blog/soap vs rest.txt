@@ -1,0 +1,56 @@
+What is a Web service?
+
+A web service is a method of communication between two electronic devices over the World Wide Web.
+
+W3C defines web service as a “software system designed to support interoperable machine-to-machine interaction over a network. 
+It has an interface described in a machine-processable format (specifically WSDL). Other systems interact with the Web service in a 
+manner prescribed by its description using SOAP messages, typically conveyed using HTTP with an XML serialization in conjunction 
+with other Web-related standards
+
+What is SOAP?
+
+SOAP is a protocol specification for exchanging structured information in the implementation of Web Services. 
+It uses XML for the message format. It is independent of the transport protocol (could be HTTP, FTP, TCP, UDP, or named pipes).
+SOAP based services strictly define the format of messages passed back and forth. A SOAP message contains the data, 
+the action to perform on it, the headers, and the error details in case of failure. Security is provided by WS-Security standards and is end-to-end.
+ It supports identity through intermediaries, not just point to point (SSL).
+
+SOAP provides a mechanism for services to describe themselves to clients (WSDL), and to advertise their existence (UDDI).
+ SOAP also provides reliable messaging (WS-ReliableMessaging), that is a successful retry logic built in and provides end to end reliability
+ through soap intermediaries.
+
+What is REST?
+
+Representational State Transfer (REST) is an architecture style for designing networked applications, that
+
+Involves clients and servers sending request and responses respectively.
+Request and response are built around the transfer of representations of resources.
+(e.g. request JSON representation of User)
+REST recognises everything a resource (e.g. User, Lottery, etc.) and each resource implements a standard uniform interface (typically HTTP interface), 
+resources have name and addresses (URIs), each resource has one or more representation (like JSON or XML) and resource representations move
+ across the network usually over HTTP.
+
+RESTful web APIs (or RESTful web service) is a web API implemented using HTTP and principles of REST. RESTful API separates
+ user interface concerns from data storage concerns. It improves portability of interface across multiple platforms and simplifies 
+server components by making them stateless. Each request from client contains all the state information and server does not hold client 
+context in the session.
+
+SOAP vs REST?
+
+One of the major benefits of SOAP is that you have a WSDL service description. You can pretty much discover the service automatically and
+ generate a useable client proxy from that service description (generate the service calls, the necessary data types for the methods and so forth).
+ Note that with version 2.0, WSDL supports all HTTP verbs and can be used to document RESTful services as well, but there is a less verbose
+ alternative in WADL (Web Application Description Language) for that purpose.
+
+With RESTful services, message security is provided by the transport protocol (HTTPS), and is point-to-point only.
+ It doesn’t have a standard messaging system and expects clients to deal with communication failures by retrying.
+ SOAP has successful/retry logic built in and provides end-to-end reliability even through SOAP intermediaries.
+
+One of the major benefits of RESTful API is that it is flexible for data representation, for example you could serialize your data in either XML 
+or JSON format. RESTful APIs are cleaner or easier to understand because they add an element of using standardised URIs and gives
+ importance to HTTP verb used (i.e. GET, POST, PUT and DELETE).
+
+RESTful services are also lightweight, that is they don’t have a lot of extra xml markup. To invoke RESTful API all you need is a
+ browser or HTTP stack and pretty much every device or machine connected to a network has that.
+
+Finally, which ever architecture you choose make sure its easy for developers to access it, and well documented.

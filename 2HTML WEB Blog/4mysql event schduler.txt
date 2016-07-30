@@ -1,0 +1,124 @@
+MySQL Event Scheduler
+=====================
+
+MySQL Event Scheduler
+
+
+Monday, March 30, 2009 - 11:05
+A new feature in MySQL version 5.1.6 is the addition of events. These can be either a single event or a schedule, both of which can be given multiple commands to run.
+First, you need to make sure that the event scheduler is running. To do this, open up MySQL query browser (or similar) and run the following MySQL command.
+
+
+SHOW PROCESSLIST;
+
+If the event scheduler you will see a row in the output that looks like this:
+1
+2
+Id, User, Host, db, Command, Time, State, Info
+120, 'event_scheduler', 'localhost', '', 'Daemon', 242, 'Waiting on empty queue', ''
+Turning the event scheduler on and off is quite straightforward and can be done as a MySQL command, or as a parameter when starting the server, or even in an ini file. To turn the scheduler on as a MySQL command run the following:
+
+SET GLOBAL event_scheduler = ON;
+
+Conversely, to turn it off, run the following:
+
+SET GLOBAL event_scheduler = OFF;
+
+To turn it off when you start the MySQL server use the following parameter. Exchange DISABLED with ENABLED to turn it on.
+
+--event-scheduler=DISABLED
+
+To turn it off in the ini file use the following. Exchange DISABLED with ENABLED to turn it on.
+event_scheduler=DISABLED For all instances of controlling the event scheduler you can also use 0 to turn it off and 1 to turn it on instead of DISABLED and ENABLED. If this doesn't work for you then try using On and Off for the values instead. You can add and alter events when the scheduler is turned off, but the events will not be run until the scheduler is enabled.
+
+To create an event you need to use the CREATE EVENT command. Lets start off by creating a single event that adds a row to a table called test in the test database at a specified time in the future. The event is called addTimestamp and the command that inserts data is after the DO command. This doesn't have to be on a separate line, but it looks better and will makes sense when you start adding multiple commands.
+
+1
+2
+3
+4
+CREATE EVENT addTimestamp
+ ON SCHEDULE AT '2009-03-30 10:20:00'
+ DO
+  INSERT INTO test.test(timestamp) VALUES (UNIX_TIMESTAMP());
+If you create an event in the past you will get the following message.
+Event execution time is in the past and ON COMPLETION NOT PRESERVE is set. The event was dropped immediately after creation.
+
+Note that this does not run your command, MySQL will just throw away your event and do nothing. The ON COMPLETION NOT PRESERVE setting tells MySQL to either save the event when it has been run, or to throw it away when complete. To save the event after it has been run add the following line underneath the ON SCHEDULE line.
+
+ON COMPLETION PRESERVE
+If you set this and try to create another event of the same name you will get an error stating that the name already exists, even if the old even is in the past.
+
+To insert multiple MySQL commands you need to use the BEGIN and END commands. The following command builds upon the previous example, except this time the table is truncated (cleared) and a new timestamp is added.
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+delimiter |
+ 
+CREATE EVENT addTimestamp
+ ON SCHEDULE AT '2009-03-30 10:28:00'
+ DO
+  BEGIN
+   TRUNCATE TABLE test.test;
+   INSERT INTO test.test(timestamp) VALUES (UNIX_TIMESTAMP());
+  END |
+ 
+delimiter ;
+The delimiter tags tell MySQL to pass the entire block in between BEGIN and END to the server before resetting this to the default and parsing each MySQL command separately.
+If you want to run the event in an hour, and don't want to be tied down to times, then change the ON SCHEDULE line to read the following:
+
+ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 HOUR
+It is easy enough to see how to change the value of the interval here so I will leave this as an exercise to the reader.
+To create an event that occurs every hour you need to change the syntax of the command slightly. Rather than give the SCHEDULE command a time or future interval you use the EVERY command.
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+delimiter |
+ 
+CREATE EVENT addTimestamp
+ ON SCHEDULE
+  EVERY 1 HOUR
+ DO
+  BEGIN
+   TRUNCATE TABLE test.test;
+   INSERT INTO test.test(timestamp) VALUES (UNIX_TIMESTAMP());
+  END |
+ 
+delimiter ;
+This can be taken a step further by restricting the window of execution. Lets say we wanted to run a command or set of commands every hour for the next 5 hours. The following commands would be added to the ON SCHEDULE command.
+
+1
+2
+3
+EVERY 1 HOUR
+STARTS CURRENT_TIMESTAMP + INTERVAL 1 HOUR
+ENDS CURRENT_TIMESTAMP + INTERVAL 5 HOUR
+This will cause the commands to be run a total of 5 times.
+If you want to know what events or schedules you are currently running the run the MySQL command SHOW EVENTS, this will give you a table full of information. This table will also contain any events that are in the past, but which have had the ON COMPLETION PRESERVE setting added to their creation.
+
+
+To drop an event you need to run the DROP EVENT command, followed by the name of the event you created.
+DROP EVENT addTimestamp;
+
+ Thanks fr reference link
+
+http://www.hashbangcode.com/blog/mysql-event-scheduler-352.html

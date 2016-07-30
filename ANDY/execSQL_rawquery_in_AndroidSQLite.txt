@@ -1,0 +1,27 @@
+
+Difference between execSQL()  and rawQuery() in android Sqlite?
+===============================================================
+
+public void execSQL (String sql) 
+Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
+You have to use execSQL() for
+
+INSERT
+UPDATE
+DELETE
+
+
+Use rawQuery() as it returns Cursor for SELECT queries.
+
+
+Soln:1
+======
+rom API Doc:
+
+public void execSQL (String sql)
+Execute a single SQL statement that is NOT a SELECT or any other SQL statement that returns data.
+
+public Cursor rawQuery (String sql, String[] selectionArgs)
+Runs the provided SQL and returns a Cursor over the result set.
+
+If you want to e.g. CREATE TABLE that does not return values you can use execSQL(), if you want a Cursor as result use rawQuery() (=SELECT statements).

@@ -1,0 +1,28 @@
+type 1		mysqli_count rows
+=======
+$result = mysqli_query($con,"SELECT mail,mobile FROM corpratedetails where empid='$eid'");
+
+$row_cnt = mysqli_num_rows($result);
+//echo $row_cnt;
+
+if($row_cnt>0){ }
+
+else{}
+
+
+============================= type 2 mysql count rows
+
+$match = "select id from $table where username = '".$_POST['username']."'
+and password = '".$_POST['password']."';"; 
+
+$qry = mysql_query($match);
+
+$num_rows = mysql_num_rows($qry); 
+
+
+//echo $num_rows;
+
+if ($num_rows <= 0) { }
+
+else
+{}

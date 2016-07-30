@@ -1,0 +1,29 @@
+<?php
+
+
+$con=mysqli_connect("localhost","root","","test");
+
+if(mysqli_connect_errno())
+{
+echo "Failed to connect to MYSQL:".mysqli_connect_error();
+}
+
+
+$result=mysqli_query($con,"select * from loopp");
+
+if($result==true)
+{
+while($row = mysqli_fetch_assoc($result)){
+     $json[] = $row;
+}
+
+echo json_encode($json);
+}
+else
+{
+$row_array['status']=0;
+echo json_encode($row_array);
+}
+
+
+?>

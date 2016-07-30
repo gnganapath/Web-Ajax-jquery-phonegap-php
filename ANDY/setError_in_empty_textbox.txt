@@ -1,0 +1,44 @@
+final String emailstr = email.getText().toString();
+final String conformemailstr = conformemail.getText().toString();
+if(emailstr.length()==0)
+{
+
+
+email.requestFocus();
+email.setText("Email Address");
+email.setTextColor(Color.RED);
+email.setError("Email Address is required");
+
+SOLN :  conformemail.setBackgroundResource(R.drawable.erroredittext);
+
+or 
+
+
+Toast.makeText(getApplicationContext(), "Empty string", Toast.LENGTH_SHORT).show();
+
+or
+
+
+Drawable drawable = (Drawable)getResources().getDrawable(R.drawable.username);
+
+drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+
+email.setError("error", drawable);
+
+}
+
+In the xml before valdation one xml background file, after Error make error message xml.
+
+before error:
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+   <solid android:color="#ffffff" />
+   <stroke android:width="1dip" android:color="#ccc"/>
+</shape>
+
+after Error:
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+   <solid android:color="#ffffff" />
+   <stroke android:width="1dip" android:color="#F00"/>
+</shape>

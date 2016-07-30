@@ -1,0 +1,33 @@
+step:1
+download xampp and install in c:Xampp  => c:\xampp\htdocs is root dir
+http://ellislab.com/codeigniter
+
+step:2
+download codeingiter from here and extract rename it (folder)
+https://www.apachefriends.org/index.html
+download the codeinginter from here
+
+
+step:3 
+
+Run the codeingniter first in browser
+http://localhost/codeapp/
+Welcome.php message will display by default.
+
+codeinginter folder contain application ,system folder and few php,txt files
+
+step:4
+dafault file location setting is app->application->config->routes.php = $default first file stored page.
+default folder is applicaiton->controller->welcome.php 
+this controller view is views->filename.php
+class name and file name must be same.
+
+
+step:5 database config
+
+application->config->database.php dbuser name,password,hostname,database name are config here
+
+application->config->autoload.php = enable from comment $autoload['libraries'] = array('database', 'session'); 
+url enable also config here
+
+application->config->config.php = make 'encrptionkey' 

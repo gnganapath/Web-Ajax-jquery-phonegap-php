@@ -1,0 +1,27 @@
+
+RelativeLayout:
+
+ <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:alpha=".5"                              --->Transparent to bagrcound
+        android:background="@drawable/border5">         ---> border.xml -> @drawable   --defing bg color and stroke gives border color
+
+</RelativeLayout>
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+     <item android:left="2dp" android:right="2dp" android:top="2dp" android:bottom="2dp"> 
+         <shape android:shape="rectangle">
+              <solid android:color="#E0ECF8" /> 
+              
+              <stroke
+        android:width="2px"
+        android:color="#000" />
+         </shape>
+     </item>   
+    
+</layer-list> 

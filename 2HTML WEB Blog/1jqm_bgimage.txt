@@ -1,0 +1,48 @@
+<!-- Copyright (c) 2012 Mobile Developer Solutions -->
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+    <title>MDS PhoneGap API Demo with jQuery Mobile</title>
+
+        <link rel="stylesheet" href="jquery.mobile/jquery.mobile{$jqmversion}.min.css" />
+        <link rel="stylesheet" href="index.css" /> 
+
+    <script src="jquery.mobile/jquery-1.7.2.min"></script>
+        <script src="jquery.mobile/jquery.mobile-1.1.0.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+        <script type="text/javascript" charset="utf-8" src="index.js"></script>
+        
+
+ <style type="text/css">
+
+.ui-page {
+    background: url(image/HRMS.png);
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-size:cover; 
+     background-size:100% 100%; 
+    
+}
+
+</style>
+
+</head> 
+<body> 
+
+<div data-role="page" data-theme="b" id="pagehome">
+
+<div data-role="header">
+    <h1>Header tex</h1>
+</div><!-- /header -->
+
+<div data-role="content" data-theme="d">    
+some text
+    </div><!-- /content -->
+
+<div data-role="footer">
+<h1>Neki izbornik</h1>
+</div>
+</div><!-- /page -->  
+  </body>
+</html>

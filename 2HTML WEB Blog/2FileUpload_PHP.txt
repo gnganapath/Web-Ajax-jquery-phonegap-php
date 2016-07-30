@@ -1,0 +1,96 @@
+fileupload.html    Specific folder,No need data base connectivity
+===============		--------------------------------------
+<html>
+<body>
+
+<form action="All_file_upload.php" method="post" enctype="multipart/form-data">
+<label for="file">Filename:</label>
+<input type="file" name="file" id="file"><br>
+<input type="submit" name="submit" value="Submit">
+</form>
+
+</body>
+</html>
+
+PHP All_file_upload.php
+=======================
+
+
+<?php
+
+$info_old_file_path="c:/wamp/www/upload/tmp/" . $_FILES["file"]["name"];
+$info_new_file_path="c:/wamp/www/upload/tmp/" . $info_new_file_name;
+
+move_uploaded_file($_FILES["file"]["tmp_name"],
+"c:/wamp/www/upload/tmp/" . $_FILES["file"]["name"]);
+// echo "<div class='sucess'>"."Stored in: " . "c:\wamp\www\upload/tmp/" . $_FILES["file"]["name"]."</div>";
+$name=rename($info_old_file_path,$info_new_file_path);
+//echo "<img src='http://127.0.0.1/upload/tmp/" . $info_new_file_name."' style='width:300; height:250px;' />";
+echo "</br>Your file is ".$_FILES['file']['name']."  uploaded.";
+//}
+//}
+
+//else
+//{
+echo "<div class='error'>Invalid file</div>";
+//}
+?>
+
+
+PHP Retricted file size and type upload
+=======================================
+<?php
+$info_file_exts = array("jpg", "jpeg", "gif", "png");
+$info_upload_exts = end(explode(".", $_FILES["file"]["name"]));
+if ((($_FILES["file"]["type"] == "image/gif")
+|| ($_FILES["file"]["type"] == "image/jpeg")
+|| ($_FILES["file"]["type"] == "image/png")
+|| ($_FILES["file"]["type"] == "image/pjpeg"))
+&& ($_FILES["file"]["size"] < 2000000)
+&& in_array($info_upload_exts, $info_file_exts))
+{
+if ($_FILES["file"]["error"] > 0)
+{
+echo "Return Code: " . $_FILES["file"]["error"] . "<br>";
+}
+else
+{
+$info_file_exts = array("jpg", "jpeg", "gif", "png");
+if($info_file_exts[0]=='jpg'){
+$ink=explode('.'.$info_file_exts[0],$_FILES["file"]["name"]);
+$time=time();
+$info_new_file_name =$ink[0].'_'.$time.'.'.$info_file_exts[0];
+}
+else if($info_file_exts[1]=='jpeg'){
+$ink=explode('.'.$info_file_exts[1],$_FILES["file"]["name"]);
+$time=time();
+$info_new_file_name =$ink[0].'_'.$time.'.'.$info_file_exts[0];
+}
+else if($info_file_exts[2]=='gif'){
+$ink=explode('.'.$info_file_exts[2],$_FILES["file"]["name"]);
+$time=time();
+$info_new_file_name =$ink[0].'_'.$time.'.'.$info_file_exts[0];
+}
+else if($info_file_exts[3]=='png'){
+$ink=explode('.'.$info_file_exts[3],$_FILES["file"]["name"]);
+$time=time();
+$info_new_file_name =$ink[0].'_'.$time.'.'.$info_file_exts[0];
+}
+
+$info_old_file_path="c:/wamp/www/upload/tmp/" . $_FILES["file"]["name"];
+$info_new_file_path="c:/wamp/www/upload/tmp/" . $info_new_file_name;
+
+move_uploaded_file($_FILES["file"]["tmp_name"],
+"c:/wamp/www/upload/tmp/" . $_FILES["file"]["name"]);
+// echo "<div class='sucess'>"."Stored in: " . "c:\wamp\www\upload/tmp/" . $_FILES["file"]["name"]."</div>";
+$name=rename($info_old_file_path,$info_new_file_path);
+echo "<img src='http://127.0.0.1/upload/tmp/" . $info_new_file_name."' style='width:300; height:250px;' />";
+echo "</br>Your file is ".$_FILES['file']['name']."  uploaded.";
+}
+}
+
+else
+{
+echo "<div class='error'>Invalid file</div>";
+}
+?>

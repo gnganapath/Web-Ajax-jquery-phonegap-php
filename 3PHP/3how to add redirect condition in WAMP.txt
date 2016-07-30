@@ -1,0 +1,38 @@
+How to call external host from local host / (cross domain call from PHP WAMP)
+=============================================================================
+
+In the JS file have this request :
+
+var request = new XMLHttpRequest();
+request.open("POST", endpoint + "/api/version/authedication/userlogin", true);
+
+
+Here endpoint is external IP / URL for hosted Domain address
+
+So, Make the following changes in WAMP -> Apache -> config -> http.config gile
+
+Below this virtual host:
+
+# Virtual hosts 
+
+
+#Include conf/extra/httpd-vhosts.conf
+
+
+# Oauth ESA server
+ProxyPassMatch ^/(api)(.*) http://23.543.34.34:8480/$1$2
+  -> $1 is (api),$2 is http://....
+
+ProxyPassReverse /api/ http://23.543.34.34:8490/$1$2
+
+Exp: => when call link start with api redirect to follwing URL and follwed folder
+
+Uncommand this modules in the same file
+
+LoadModule vhost_alias_module modules/mod_vhost_alias.so
+
+LoadModule proxy_http_module modules/mod_proxy_http.so
+
+LoadModule proxy_scgi_module modules/mod_proxy_scgi.so
+
+etc....

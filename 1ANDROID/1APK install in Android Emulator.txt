@@ -1,0 +1,13 @@
+Step to install APK in Android Emulator :
+=========================================
+Step 1-> Run the emulator ( While I created new emulator Now )
+
+step 2-> Paste the apk in SDK manager tools and platform-tools folders.
+		 ( To avoid some issues/ error)
+		 
+Step 3-> Run this command adb CMD:\>install AppName.APK (open eun->cmd)
+
+step 4-> Wait for 2 min it's show Success Message.
+		 Sometimes App icon closed unfortunately. 
+		 
+step 5->But App will run continuous Try / click. 

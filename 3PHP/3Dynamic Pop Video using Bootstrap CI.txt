@@ -1,0 +1,35 @@
+html: /php File
+	<td class="center"><a style="text-decoration:none;"   data-target="#myModal2" data-toggle="modal" class="btn-lg btn-success btn-small" href="#" onclick="videolink(2)">   Play </a></td>
+	<input type="hidden" id="link2" value="mov_bbb.mp4"  />
+js:
+<script>
+
+
+function videolink(id)
+        {
+		
+		var videofile=document.getElementById('link'+id).value;
+		//alert(videofile);
+         
+        $("video").append("<source src='<?php echo base_url();?>img/"+videofile+"' type='video/mp4'>");
+ 
+        }
+function closevideo()
+{
+location.reload(true);
+}
+</script>
+
+
+<div class="modal fade " id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-content1">
+	<div class="modal-body">
+		<video width="530" height="300" controls>
+		
+		</video> 
+	</div> 
+	<div class="modal-footer">
+	<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="closevideo()">Close</button>
+	</div>
+	</div>
+</div>

@@ -1,0 +1,6 @@
+Table 1. Android device emulator shortcuts
+
+Shortcut	Description
+Alt+Enter	Maximizes the emulator.
+Ctrl+F11	Changes the orientation of the emulator from landscape to portrait and vice versa.
+F8	Turns the network on and off.

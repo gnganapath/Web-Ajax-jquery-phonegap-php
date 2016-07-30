@@ -1,0 +1,64 @@
+XAMPP, Apache - Error: Apache shutdown unexpectedly
+
+I've just reinstaled XAMPP... + when I try to start my Apache server in the Control Panel I now get following errors:
+
+16:50:25  [Apache]  Status change detected: running
+16:50:26  [Apache]  Status change detected: stopped
+16:50:26  [Apache]  Error: Apache shutdown unexpectedly.
+16:50:26  [Apache]  This may be due to a blocked port, missing dependencies, 
+16:50:26  [Apache]  improper privileges, a crash, or a shutdown by another method.
+16:50:26  [Apache]  Press the Logs button to view error logs and check
+16:50:26  [Apache]  the Windows Event Viewer for more clues
+16:50:26  [Apache]  If you need more help, copy and post this
+16:50:26  [Apache]  entire log window on the forums
+
+SOLUTION:
+
+
+
+If you are using the latest Skype, go to Tools -> Options -> Advanced -> connection. 
+
+Disable the "Use port 80 and 443 for alternatives for incoming connections"
+
+Sign Out and Close all Skype windows. Try restart your Apache again.
+
+Thanks for Ref Link:
+http://stackoverflow.com/questions/18300377/xampp-apache-error-apache-shutdown-unexpectedly
+ 
+SOLUTION #2
+
+open your xampp control panel then click its "config"
+choose the "Apache (httpd.conf)" and find this code below and change it into this one:
+
+#Change this to Listen on specific IP addresses as shown below
+
+#to prevent Apache from glomming onto all bound IP addresses.
+
+#Listen 0.0.0.0:80
+
+#Listen [::]:80
+
+Listen 80
+
+# Dynamic Shared Object (DSO) Support
+
+save it (ctrl + s)
+after that, go back to xampp control panel and click again its config
+choose "Apache (httpd-ssl.conf)" find this code below and change it again:
+# Note: Configurations that use IPv6 but not IPv4-mapped addresses need two
+
+# Listen directives: "Listen [::]:443" and "Listen 0.0.0.0:443"
+
+#
+
+#Listen 0.0.0.0:443
+
+#Listen [::]:443
+
+Listen 443
+
+save it (ctrl + s)
+then, click the "config" (note: above the netstat) and click the "service and port settings" then save both of it.
+finally, go to the "control panel" -> "Programs & Features" -> "Turn Windows On or Off".
+Uncheck your "Internet Information Services" then click ok.
+just wait for it and your computer/laptop will be automatically restart and try to open again your xampp control panel then start your Apache.

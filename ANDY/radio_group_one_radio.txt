@@ -1,0 +1,82 @@
+package com.ecommerce.epay1;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends Activity {
+
+	private RadioGroup radioGroup;
+	private RadioButton dc, cc, nt,dupay;
+	private Button button;
+	private TextView textView;
+
+	
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		radioGroup = (RadioGroup) findViewById(R.id.radioGroup1);
+		
+		dc = (RadioButton) findViewById(R.id.radioButton1);
+		cc = (RadioButton) findViewById(R.id.radioButton2);
+	    nt = (RadioButton) findViewById(R.id.radioButton3);
+	    dupay = (RadioButton) findViewById(R.id.radioButton4);
+		
+	}
+		
+	public void onRadioButtonClicked(View view) {
+	    // Is the button now checked?
+	    boolean checked = ((RadioButton) view).isChecked();
+	    
+	    // Check which radio button was clicked
+	    switch(view.getId()) {
+	        case R.id.radioButton1:
+	            if (checked)	               
+	            Toast.makeText(getApplicationContext(), "Dc", Toast.LENGTH_SHORT).show();
+	            cc.setChecked(false);
+	            nt.setChecked(false);
+	            dupay.setChecked(false);
+	            break;
+	        case R.id.radioButton2:
+	            if (checked)	                
+	            Toast.makeText(getApplicationContext(), "CC", Toast.LENGTH_SHORT).show();
+	            dc.setChecked(false);
+	            nt.setChecked(false);
+	            dupay.setChecked(false);
+	            break;
+	        case R.id.radioButton3:
+	            if (checked)	                
+	            Toast.makeText(getApplicationContext(), "nt", Toast.LENGTH_SHORT).show();
+	            dc.setChecked(false);
+	            cc.setChecked(false);
+	            dupay.setChecked(false);
+	            break;
+	        case R.id.radioButton4:
+	            if (checked)	                
+	            Toast.makeText(getApplicationContext(), "dupay", Toast.LENGTH_SHORT).show();
+	            dc.setChecked(false);
+	            nt.setChecked(false);
+	            cc.setChecked(false);
+	            break;
+	    }
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+}

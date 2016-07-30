@@ -1,0 +1,47 @@
+CREATE TABLE table1_seq
+(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY
+);
+
+---------------------
+
+CREATE TABLE table1
+(
+  id VARCHAR(7) NOT NULL PRIMARY KEY DEFAULT '0', name VARCHAR(30)
+);
+
+-----------------------
+
+alter table doctors modify column did auto increment
+
+DELIMITER $$
+CREATE TRIGGER tg_table1_insert
+BEFORE INSERT ON table1
+FOR EACH ROW
+BEGIN
+  INSERT INTO table1_seq VALUES (NULL);
+  SET NEW.id = CONCAT('LHPL', LPAD(LAST_INSERT_ID(), 3, '0'));
+END$$
+DELIMITER ;
+
+======
+
+primary key / forien key
+
+CREATE TABLE Orders
+(
+O_Id int NOT NULL,
+OrderNo int NOT NULL,
+P_Id int,
+PRIMARY KEY (O_Id),
+FOREIGN KEY (P_Id) REFERENCES Persons(P_Id)
+)
+
+CREATE TABLE Orders
+(
+O_Id int NOT NULL PRIMARY KEY,
+OrderNo int NOT NULL,
+P_Id int FOREIGN KEY REFERENCES Persons(P_Id)
+)
+
+---------------------

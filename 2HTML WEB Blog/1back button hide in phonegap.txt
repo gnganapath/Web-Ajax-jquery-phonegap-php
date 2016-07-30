@@ -1,0 +1,102 @@
+
+For Index page: BACK or EXIT APP 
+================================
+
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady()
+{
+
+document.addEventListener("backbutton", Backbutton,false);
+	//msgloadingimage();
+
+}
+
+function Backbutton(){
+	  if($.mobile.activePage.is("#index")){
+  
+	navigator.notification.confirm('Do you want to exit', onConfirm,'Alert');	               
+     } 
+     
+     function onConfirm(button) 
+     {
+     	if(button==1)
+     	{
+     		  //  e.preventDefault();                  
+   	        	navigator.app.exitApp();
+     	}
+     	else
+     	{
+     	}
+     }
+ }
+
+--------------------------------
+
+Other pages:
+===========
+
+<script type="text/javascript">
+
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady() {
+	document.addEventListener("backbutton", Backbutton,false);
+	//msgloadingimage();
+		
+	
+}
+
+document.addEventListener("deviceready", onDeviceReady, false);
+function alertCallback()
+{}
+function onDeviceReady() { 
+	document.addEventListener("backbutton", Backbutton , false);
+}
+
+
+function Backbutton() 
+{
+	$.mobile.showPageLoadingMsg();
+	window.location="kphome.html";
+	$.mobile.hidePageLoadingMsg();
+}
+function backbutton()
+{
+	$.mobile.showPageLoadingMsg();
+	window.location="kphome.html";
+	$.mobile.hidePageLoadingMsg();
+	}
+function logout()
+{
+	navigator.notification.confirm('Do you want to logout', onConfirm,'Alert');
+	
+}
+
+
+function onConfirm(button) 
+{	
+if(button==1)
+{
+	$.mobile.showPageLoadingMsg();
+	window.location="index.html";
+	sessionStorage.clear();
+}
+else
+{
+	
+}
+}
+
+
+-----------------------------------------------------------------------------------
+
+Log out image in right top corner:
+===================================
+
+
+
+
+<a href="javascript:logout()"  title="Logout" rel="external"  data-theme="b" data-inline="true" style="float:right;margin-top:0px; " >
+	<img id="logout_icon" alt="logout"  style="width:35px;  height:35px; " src="images/logout.png"  > </a>
+

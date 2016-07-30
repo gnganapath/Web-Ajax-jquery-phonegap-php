@@ -1,0 +1,48 @@
+Move a table from one database to another database SQL Server
+==============================================================
+
+TYPE - 1
+---------
+If the databases are on same server then do it like this,\
+-----------------------------------------------------------
+
+select * into DB_2.T1 from DB_1.[dbo].[T1]
+
+if you have databases on different servers than you have to create a linked server.
+
+On second thought you can generate "create tables scripts" and run them on second database
+
+
+TYPE -2
+--------
+SQL Server Management Studio -manual
+-----------------------------------------------------------
+
+In SQL Server Management Studio you have Import and Export Wizard :
+
+    Right click on db name(DB_2)
+    Tasks
+    Import Data
+    Choose data source (DB_1)
+    Choose destination (DB_2)
+    Choose copy data from one ore more tables
+    Choose your table (T1)
+    Finish
+
+
+TYPE -3
+--------
+In object Explorer - use query analyser
+-----------------------------------------------------------
+
+With help of my office friends , this is the solution I figured out.
+
+    In object Explorer , go to source database and select table to move.
+
+    Right click , Script Table As -> CREATE TO -> New Query Editor Window. This opens query window with the SQL queries specifying schema , indexes , constraints on the table.
+
+    You can change table name in CREATE TABLE section and make other changes...
+
+    Change database name in first line USE <DATABASE> to Target database and execute the the query.
+
+Thanks.

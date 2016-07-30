@@ -1,0 +1,33 @@
+Page orientation Change Phonegap:
+---------------------------------
+
+work sometimes in cordova 2.7, Try with lower version will.
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=320; user-scalable=no" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<title>PhoneGap</title>
+     <script type="text/javascript" charset="utf-8" src="cordova-2.7.0.js"></script>
+     <script type="text/javascript" charset="utf-8">
+     
+     function init() {
+    	    window.addEventListener("orientationchange", orientationChange, true);
+    	}
+
+    	function orientationChange(e) {
+    	    var orientation="portrait";
+    	    if(window.orientation == -90 || window.orientation == 90) orientation = "landscape";
+    	        document.getElementById("status").innerHTML+=orientation+"<br>";
+    	}
+     </script>
+
+</head>
+<body onload="init();" >
+
+    <h2>Orientation Test</h2>
+    <div id="status"></div>
+
+</body>
+</html>

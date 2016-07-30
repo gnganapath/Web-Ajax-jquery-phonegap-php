@@ -1,0 +1,35 @@
+    
+padding for first layout :
+
+<layout 
+
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+</layout>
+
+
+valeus->dimen.xml
+
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+</resources>
+
+
+
+soln:2
+======
+
+Inner-Relative Layout margin layout :
+
+
+android:layout_marginBottom="@dimen/activity_vertical_margin"
+android:layout_marginLeft="@dimen/activity_horizontal_margin"
+android:layout_marginRight="@dimen/activity_horizontal_margin"
+android:layout_marginTop="@dimen/activity_vertical_margin" 

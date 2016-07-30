@@ -1,0 +1,15 @@
+To display Array values from control ( more than 1 row or records)
+
+use foreach($arravar as $arr)
+
+ <?php foreach($schedule as $sched) { $sched['col_name'] }	?>
+
+End once all records are showed
+
+-------------------------------------------------------------------
+
+To display Array values from control only 1 row 
+
+use $arravar[0]['col_name']
+ <?php echo $schedule[0]['schedule_child_id']; ?>
+							   

@@ -1,0 +1,37 @@
+ Set and reset proxy for git and npm connection
+Depending on whether the connection is behind a proxy or not, the proxy settings will need to set/reset correspondingly when using npm and git.
+
+The command to set and reset the proxy are
+
+# Set proxy for npm:
+npm config set proxy http://proxy:8080
+npm config set https-proxy http://proxy:8080
+
+# Set proxy for git:
+git config --global http.proxy http://proxy:8080
+git config --global https.proxy http://proxy:8080
+
+ 
+
+ 
+
+# reset proxy for npm 
+npm config rm proxy
+npm config rm https-proxy
+
+
+# reset proxy for git
+git config --global --unset http.proxy
+git config --global --unset https.proxy 
+
+
+# get proxy setting fro git
+
+git config --global --list
+npm config get list
+
+npm config get proxy
+npm config get https-proxy
+
+
+Thanks for HELP :http://jonathanblog2000.blogspot.com/2013/11/set-and-reset-proxy-for-git-and-npm.html?showComment=1425635909327#c889755258776988581

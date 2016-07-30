@@ -1,0 +1,33 @@
+tx.executeSql ("CREATE TABLE  IF NOT EXISTS [5SAuditFormData]
+([5SAuditFormData_ID] integer NOT NULL,
+[5SAudit_form_ID] [int] NOT NULL,
+[5SCategoryItem_ID] [int] NOT NULL,
+[Occurrence] [int] NOT NULL Default 0,
+[Comment] [varchar](500) NULL,
+[ActionTaken] [bool] NOT NULL Default 0,
+[flagset] [bool] NOT NULL Default 0,
+UNIQUE ([5SAudit_form_ID] ASC, 
+[5SCategoryItem_ID] ASC ),
+Foreign key ([5SAudit_form_ID]) references [5SAudit_form] ([5SAudit_form_ID])ON DELETE CASCADE,
+Foreign key ([5SCategoryItem_ID]) references [5SCategoryItem] ([5SCategoryItem_ID]))");
+		
+tx.executeSql ("CREATE TABLE IF NOT EXISTS  [5SAudit_form]
+([5SAudit_form_ID] integer NOT NULL,
+[AuditMgmt_ID] [int] NOT NULL,
+[Comment] [varchar](500) NULL,
+[Concern] [varchar](500) NULL,
+[PlusPoint] [varchar](500) NULL,
+[Suggestion] [varchar](500) NULL,
+[OverAllScore] [decimal](6, 2) NULL,
+[Finished] [bool] NOT NULL Default 0,
+Foreign key ([AuditMgmt_ID]) references [AuditMgmt] ([AuditMgmt_ID]))");
+
+tx.executeSql("CREATE TABLE  IF NOT EXISTS [5SAuditFormPhoto]
+([5SAuditFormPhoto_id] integer Primary key AutoIncrement NOT NULL,
+[5SAuditFormData_ID] [int] NOT NULL,
+[Image] varchar NOT NULL,
+[ImageType] [varchar](20) NULL,
+[PreviewImage] varchar NULL,
+[flagset] [bool] NOT NULL Default 0)");
+		
+		

@@ -1,0 +1,13 @@
+<?php 
+$chat_list=array(0,1,2,3,4,5,0,4,2,3);  // This array have duplicates 
+
+$user=array(); 
+
+foreach($chat_list as $key=>$chat)
+{
+ $user[$key]=$chat['UserName'];
+}
+ 
+ print_r(implode(' , ',array_unique($user))); //This will show unique and added comma for each element.
+ 
+ ?> 

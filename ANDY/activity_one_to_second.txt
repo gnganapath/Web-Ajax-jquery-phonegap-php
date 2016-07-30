@@ -1,0 +1,54 @@
+public class FirstActivity extends Activity {
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.main);
+
+    Button orderButton = (Button)findViewById(R.id.order);
+
+    orderButton.setOnClickListener(new View.OnClickListener() {
+
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(FirstActivity.this, OrderScreen.class);
+        startActivity(intent);
+      }
+
+    });
+  }
+}
+
+main.xml:
+
+<button android:id=@id+order />
+
+
+public class OrderScreen extends Activity {
+
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.order);
+
+    Button orderButton = (Button) findViewById(R.id.end);
+
+    orderButton.setOnClickListener(new View.OnClickListener() {
+
+      @Override
+      public void onClick(View view) {
+        finish();
+      }
+
+    });
+  }
+}
+
+order.xml:
+
+<button android:id=@id+end />
+
+
+mainfest:
+<activity android:name=".OrderScreen" />
+

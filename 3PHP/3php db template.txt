@@ -1,0 +1,28 @@
+$var1=$_POST['passvar'];
+$var2=$_POST['var2'];
+
+$con=mysqli_connect("localhost","root","","DBNAME");
+
+if(mysqli_connect_errno())
+{
+echo "Failed to connect to MYSQL:".mysqli_connect_error();
+}
+
+
+$result=mysqli_query($con,"query");
+
+if($result==true)
+{
+
+select and fetching -> $row=mysqli_fetch_array($result);
+
+insert data -> echo "succecss";
+$row_array['status']=$row['colname'];
+
+echo json_encode($row_array);
+}
+else
+{
+$row_array['status']=0;
+echo json_encode($row_array);
+}

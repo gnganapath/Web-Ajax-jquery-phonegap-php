@@ -1,0 +1,36 @@
+
+
+$accom=mysql_query("SELECT * FROM `businessProfile` WHERE `id`='$updateid'");
+$accomdetail=mysql_fetch_array($accom);
+$accom=$accomdetail['accommodation'];
+$accom= explode(",",$accom);
+//echo $accom[0];
+
+
+$getcafeDetails=mysql_query("SELECT * FROM `accommodation`");	
+$i=0;
+while($getDetails=mysql_fetch_array($getcafeDetails))
+{
+	$accom_id=$getDetails['accommodation_id'];
+	$accom__text=urldecode($getDetails['accommodation_text']);
+	
+	?>	
+
+
+<?php if(in_array($accom_id, $accom)) {  echo 'checked'; } ?>
+
+
+$i++;}
+------------------------------------------------------------------------------------------
+
+$type='str1';
+
+while($getType=mysql_fetch_array($getBusinessType))
+{
+$businessType=$getType['businessType'];
+$businessTypeid=$getType['id'];
+
+?>
+
+
+<option name="businessTypename" value="<?php echo $businessTypeid;?>"  <?php if(isset($type)) if($type == $businessTypeid ) { ?>selected= "selected"<?php } ?>><?php echo $businessType; ?></option>

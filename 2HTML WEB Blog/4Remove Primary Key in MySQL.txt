@@ -1,0 +1,77 @@
+Primary key:
+============
+only one column, MAY/not be unique definition. MAy/not auto increment.
+More than one columns can define by composite primary key.
+
+unique key:
+============
+column value must be unique of whole table.more than one column can define unique key.
+
+auto increment:
+===============
+can be define int data type columns.
+
+
+
+
+When I run the command:
+
+alter table user_customer_permission drop primary key;
+
+--===>
+You should remove the autoincrement property before dropping the key:
+
+ALTER TABLE user_customer_permission MODIFY id INT NOT NULL;
+ALTER TABLE user_customer_permission DROP PRIMARY KEY;
+
+----------===========================--------------------------------------
+
+Auto increment insert in mysql
+Using AUTO_INCREMENT
+The AUTO_INCREMENT attribute can be used to generate a unique identity for new rows:
+
+CREATE TABLE animals (
+     id MEDIUMINT NOT NULL AUTO_INCREMENT,
+     name CHAR(30) NOT NULL,
+     PRIMARY KEY (id)
+) ENGINE=MyISAM;
+
+INSERT INTO animals (name) VALUES
+    ('dog'),('cat'),('penguin'),
+    ('lax'),('whale'),('ostrich');
+
+SELECT * FROM animals;
+Which returns:
+
++----+---------+
+| id | name    |
++----+---------+
+|  1 | dog     |
+|  2 | cat     |
+|  3 | penguin |
+|  4 | lax     |
+|  5 | whale   |
+|  6 | ostrich |
++----+---------+
+No value was specified forthe AUTO_INCREMENT column, so MySQL assigned sequence numbers automatically. 
+
+
+===========================================================================
+
+
+	
+
+you can get id of recent inserted record using mysql_insert_id() by using that id you can get records using select query
+
+<?php
+include 'db.php';
+$query=mysql_query("INSERT INTO table(`fname`, `lname`) VALUES('some', 'one')");
+$id=mysql_insert_id();
+
+$select_query=mysql_query("SELECT * FROM table where id=".$id."");
+
+
+?>
+
+
+2013-10-01

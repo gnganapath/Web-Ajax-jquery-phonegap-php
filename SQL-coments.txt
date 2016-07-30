@@ -1,0 +1,120 @@
+Statement Description
+Data Manipulation
+SELECT Retrieves data from the database
+INSERT Adds new rows of data to the database
+UPDATE Modifies existing database data
+MERGE Conditionally inserts/updates/deletes new and existing rows
+DELETE Removes rows of data from the database
+Data Definition
+CREATE TABLE Adds a new table to the database
+DROP TABLE Removes a table from the database
+ALTER TABLE Changes the structure of an existing table
+CREATE VIEW Adds a new view to the database
+DROP VIEW Removes a view from the database
+CREATE INDEX Builds an index for a column
+DROP INDEX Removes the index for a column
+CREATE SCHEMA Adds a new schema to the database
+DROP SCHEMA Removes a schema from the database
+CREATE DOMAIN Adds a new data value domain
+ALTER DOMAIN Changes a domain definition
+DROP DOMAIN Removes a domain from the database
+Access Control
+GRANT Grants user access privileges
+REVOKE Removes user access privileges
+CREATE ROLE Adds a new role to the database
+GRANT ROLE Grants role containing user access privileges
+DROP ROLE Removes a role from the database
+Transaction Control
+COMMIT Ends the current transaction
+ROLLBACK Aborts the current transaction
+SET TRANSACTION Defines data access characteristics of the current transaction
+START TRANSACTION Explicitly starts a new transaction
+SAVEPOINT Establishes a recovery point for a transaction
+Programmatic SQL
+DECLARE Defines a cursor for a query
+EXPLAIN Describes the data access plan for a query
+OPEN Opens a cursor to retrieve query results
+FETCH Retrieves a row of query results
+CLOSE Closes a cursor
+PREPARE Prepares a SQL statement for dynamic execution
+EXECUTE Executes a SQL statement dynamically
+DESCRIBE Describes a prepared query
+
+
+Data Type Abbreviation(s) Description
+CHARACTER(len) CHAR Fixed-length character strings
+CHARACTER VARYING(len) CHAR VARYING,
+VARCHAR
+Variable-length character strings
+CHARACTER LARGE
+OBJECT(len)
+CLOB Large fixed-length character strings
+NATIONAL CHARACTER(len) NATIONAL CHAR, NCHAR Fixed-length national character strings
+NATIONAL CHARACTER
+VARYING(len)
+NATIONAL CHAR
+VARYING, NCHAR
+Variable-length national character strings
+NATIONAL CHARACTER
+LARGE OBJECT(len)
+NCLOB Large variable-length national character
+strings
+BIT(len) Fixed-length bit strings
+BIT VARYING(len) Variable-length bit strings
+INTEGER INT Integers
+SMALLINT Small integers
+NUMERIC(precision, scale) Decimal numbers
+DECIMAL(precision, scale) DEC Decimal numbers
+FLOAT(precision) Floating point numbers
+REAL Low-precision floating point numbers
+DOUBLE PRECISION High-precision floating point numbers
+DATE Calendar dates
+TIME(precision) Clock times
+TIME WITH TIME ZONE
+(precision)
+Clock times with time zones
+TIMESTAMP(precision) Dates and times
+TIMESTAMP WITH TIME
+ZONE (precision)
+Dates and times with time zones
+INTERVAL Time intervals
+XML(type modifier [secondary
+type modifier])
+Character data formatted as Extensible
+Markup Language (XML)
+TABLE 5-4 ANSI/ISO SQL Data Types
+
+
+
+Format Name /Date Format/ Date Example /Time Format /Time Example
+American mm/dd/yyyy 5/19/2008 hh:mm am/pm 2:18 PM
+European dd.mm.yyyy 19.5.2008 hh.mm.ss 14.18.08
+Japanese yyyy-mm-dd 2008-5-19 hh:mm:ss 14:18:08
+ISO yyyy-mm-dd 2008-5-19 hh.mm.ss 14.18.08
+TABLE 5-5 DB2 SQL Date and Time Formats
+
+
+Function 			Returns
+BIT_LENGTH (string) The number of bits in a bit string
+CAST (value AS data_type) The value, converted to the specified data type (e.g., a date converted to a
+character string)
+CHAR_LENGTH (string) The length of a character string
+CONVERT (string USING conv) A string converted as specified by a named conversion function
+CURRENT_DATE The current date
+CURRENT_TIME (precision) The current time, with the specified precision
+CURRENT_TIMESTAMP (precision) The current date and time, with the specified precision
+EXTRACT (part FROM source) The specified part (DAY, HOUR, etc.) from a DATETIME value
+LOWER (string) A string converted to all lowercase letters
+OCTET_LENGTH (string) The number of 8-bit bytes in a character string
+POSITION (target IN source) The position where the target string appears within the source string
+SUBSTRING (source FROM n FOR len) A portion of the source string, beginning at the nth character, for a length
+of len
+TRANSLATE (string USING trans) A string translated as specified by a named translation function
+TRIM (BOTH char FROM string) A string with both leading and trailing occurrences of char trimmed off
+TRIM (LEADING char FROM string) A string with any leading occurrences of char trimmed off
+TRIM (TRAILING char FROM string) A string with any trailing occurrences of char trimmed off
+UPPER (string) A string converted to all uppercase letters
+TABLE 5-6 SQL Standard Built-In Functions
+
+
+

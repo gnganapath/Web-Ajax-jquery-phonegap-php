@@ -1,0 +1,55 @@
+IIS PHP configuration
+=======================
+
+Create folder in wwwroot ->hms
+
+create file login.html
+
+open in web browser. Permission error occur. 
+
+Open IIs manager and locate the hms folder and add edit permission or do something.It Will work.
+
+Install IIS manger for PHP. Will display icon in IIS Manager.
+
+Double click the PHP IIS manager->
+
+PHP MANGER PAGE=>
+
+Register new PHP version.
+
+Make the php Cgi.exe application location. If it's in WAMP or separete folder for PHP in c:\
+
+Chen=check phpinfo ,change PHP version are visible.
+
+
+1.Enable IIS in windows feature.
+
+2.Install IIS manager for PHP
+
+3.Register new PHP cgi-app in IIS manger 
+
+4.Enable (download PHP version related sqlsrv54 for php5.4 sqlsrv for php5.2)
+
+5.open php.in file in txt format and enable it in corresponding method(uncommnet ; add text in extension)
+
+6.Install sql native client 
+
+7.conn.php in inetpub->hms->conn.php run this file.(make array format connection,direct not accepted.)
+
+<?php
+$serverName = "localhost";
+$database="hms";
+$uid='sa';
+$password='Kaspon123';
+$connectionInfo = array( "Database"=>$database, "UID"=>$uid, "PWD"=>$password);
+$conn = sqlsrv_connect( $serverName, $connectionInfo );
+//sqlsrv_configure('WarningsReturnAsErrors',0);
+if( $conn === false ) {
+    die( print_r( sqlsrv_errors(), true));
+}
+
+echo 'connected';
+?>
+
+
+

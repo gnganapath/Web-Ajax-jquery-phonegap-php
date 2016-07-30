@@ -1,0 +1,37 @@
+ 13 down vote accepted
+	
+
+You have to override your ; delimiter with something like $$ to avoid this kind of error.
+
+After your function definition, you can set the delimiter back to ;.
+
+This should work:
+
+DELIMITER $$
+CREATE FUNCTION F_Dist3D (x1 decimal, y1 decimal) 
+RETURNS decimal
+DETERMINISTIC
+BEGIN 
+  DECLARE dist decimal;
+  SET dist = SQRT(x1 - y1);
+  RETURN dist;
+END$$
+DELIMITER ;
+
+
+==============================================
+
+mysql display list of user defined functions in phpmyadmin
+
+select * from information_schema.routines;
+
+======================================================
+
+How do I call a defined function in another php script?
+
+<?php
+require_once("funktion.php");
+Uhrzeit();
+?>
+
+============================================

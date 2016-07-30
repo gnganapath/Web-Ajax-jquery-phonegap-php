@@ -1,0 +1,37 @@
+Loop through JavaScript object: stringfy
+===================================
+
+I have a JavaScript object like the following
+
+ var p =
+    {
+        "p1": "value1",
+        "p2": "value2",
+        "p3": "value3"
+    };
+
+
+You can use the for-in loop as shown by others. However, you also want to make sure that the key you get is an actual property of an object, and doesn't come from the prototype:
+
+for (var key in p) {
+  if (p.hasOwnProperty(key)) {
+    alert(key + " -> " + p[key]);
+  }
+}
+
+
+Would propose that you change the alert line just for clarity to alert(key + " -> " + JSON.stringify(p[key])); 
+
+
+
+----------------
+
+22
+down vote
+Under ECMAScript 5, you can combine Object.keys() and Array.prototype.forEach():
+
+    var obj = { first: "John", last: "Doe" };
+    // Visit non-inherited enumerable keys
+    Object.keys(obj).forEach(function(key) {
+        console.log(key);
+    });

@@ -1,0 +1,10 @@
+php CORS ajax -jquery :
+=======================
+php ajax cross domain origin request 
+
+addthe below line in php file :
+
+Cross origin is solved from server end...
+
+<?php
+header("Access-Control-Allow-Origin: *"); 

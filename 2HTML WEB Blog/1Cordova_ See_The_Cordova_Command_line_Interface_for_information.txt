@@ -1,0 +1,64 @@
+Upgrading Phonegap Android from 2.5 to 2.6 and 2.7 step
+
+
+android phonegap upgrade
+
+Hi I have problem upgrading Phonegap from 2.5.0 to 2.6.0 and 2.7.0 and specifically with step 8. I'm following the steps from the documentation Upgrading Cordova Android
+
+Copy files from bin/templates/cordova to the cordova directory in your project
+
+Where should I put those files, so they could upgrade my project?
+
+edit flag
+asked May 7 at 10:37
+
+
+2 Answers order by  
+vote up
+0
+vote down
+I'm also trying to upgrade from 2.5.0 to 2.7.0 and running the update.bat file gave me the following message: Missing one of the following: JDK: java.oracle.com Android SDK: developer.android.com Apache ant: ant.apache.org – Etienne Desgagné May 27 at 2:15"
+
+You need to check your 'path' System Variables in Environment variables under advanced system settings. JDK is the Java Development Kit and you check if it's correct by 'echo %JAVA_HOME% in a terminal. Ant is an apache thing and again you check that's correct by 'echo %ANT_HOME% and then you just need to make sure your Android SDK folder is in the path variable.
+
+edit flag
+answered Jun 4 at 14:02
+
+vote up
+2
+vote down
+
+===>
+The Android Phonegap conversion docs have changed significantly. There's no longer a step by step process that walks through each upgrade requirement. Instead, theres an "update" program that theoretically does the upgrade automatically. It didn't exactly work this way for me. After going through the documented update process (one step now) I had to go through my project and make sure everything was in place - specifically the cordova-2.7.0.jar and the cordova-2.7.0.js files.
+
+I've just finished upgrading an Android project from Phonegap v2.5.0 to Phonegap v2.7.0. The process I followed was:
+
+Back up the Android project.
+
+Execute the Phonegap update command for v2.7.0 as described in the PG upgrade documentation
+
+Change the current directory to Phonegap for Android directory:
+
+$ cd /phonegap-2.7.0/lib/android
+Execute the update command:
+
+$ ./bin/update YOUR/CORDOVA/PROJECT/DIR
+Ensure that Eclipse is referencing the correct Phonegap library in the libs directory: cordova-2.7.0.jar.
+
+I also deleted the reference to the previous jar file.
+
+Make sure that the phonegap javascript file (cordova-2.7.0.js) is referenced appropriately in the index.html file.
+
+From within Eclipse: Project/Clean
+
+Build the project and test.
+
+edit flag
+edited May 7 at 23:23
+Chris Krycho 
+answered May 7 at 22:56
+
+dmillasich
+21?2
+?
+I'm also trying to upgrade from 2.5.0 to 2.7.0 and running the update.bat file gave me the following message: Missing one of the following: JDK: java.oracle.com Android SDK: developer.android.com Apache ant: ant.apache.org – Etienne Desgagné May 27 at 2:15

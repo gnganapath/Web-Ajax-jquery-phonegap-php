@@ -1,0 +1,25 @@
+Remove jquery validation error's in reset(btn) the  form:
+=========================================================
+
+$("#reset").click(function() {
+  $("label.error").hide();
+  $(".error").removeClass("error");
+  });
+
+
+
+
+Soln 2 - related to full form:
+------
+You want the resetForm() method:
+
+var validator = $("#myform").validate(
+   ...
+   ...
+);
+
+$(".cancel").click(function() {
+    validator.resetForm();
+});
+
+but not remove error msg....

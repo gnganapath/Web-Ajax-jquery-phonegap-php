@@ -1,0 +1,126 @@
+Dynamic Text Box add edit and delete and change that values as Array format and store in single column with comma(,) seperator. 
+
+Addform.php:
+-------------
+<?php 
+<script src="admin/js/jquery-1.11.1.js" ></script>
+
+<form action="adddata.php" method="post" name="addevents"
+ <td rowspan="2" style="border:1px solid #ccc;overflow:auto;"><div style="overflow:auto;">
+	Latitude : <input type="text" name="latitude[]"   />
+    Longitude : <input type="text" name="longitude[]"    /><input type="button" onclick="addFormField()" value="add" /><br>
+	
+	
+	<div id="MoreFiles">
+	</div>
+	
+<script type="text/javascript" language="javascript">
+  var id = 1;
+  function addFormField() {
+  
+      if(id < 100){
+         
+      
+      jQuery("#MoreFiles").append("<div class='spacer'></div><div class='AdmFleft'><div id='row"+id+"'><div class='control-group'><div class='controls'><label class='control-label' for='focusedInput'>Latitude : <input class='input-xlarge focused'  type='text' value='' name='latitude[]'>&nbsp;<label class='control-label' for='focusedInput'>Longitude : <input class='input-xlarge focused'  type='text' value='' name='longitude[]'><a href='#' onClick='removeFormField(\"#row"+id+"\"); return false;'>DELETE</a></div></div></div></div>");
+      id++;
+	  //id = (id-1) + 2;
+      //document.getElementById('id').value = id;
+     // datep();
+      }
+      else
+        alert('Limit Reached');
+      
+  }
+  function removeFormField(id) { 
+  alert(id);
+      
+      jQuery(id).remove();
+  }
+
+</script>
+</td>
+
+
+</form>
+?>
+
+adddata.php:
+============
+<?php
+
+$lat=$_POST["latitude"];
+$long=$_POST["longitude"];
+foreach($lat as $latitude) 
+{
+ $item1 .= $latitude.',';
+}
+foreach($long as $longitude) 
+{
+ $item2 .= $longitude.',';
+}
+$latitude=substr($item1,0,-1);
+$longitude=substr($item2,0,-1);//$longitude0.','.$longitude1.','.$longitude2.','.$longitude3.','.$longitude4; 
+ //insert  into $latitude......,
+
+?>
+
+================================
+editform.php:
+-------------
+
+$id = $_GET['id'];
+$query=mysql_query("select * from events where eventid=$id");
+$res = mysql_fetch_assoc($query);
+
+<td rowspan="2" style="border:1px solid #ccc;">
+	
+	<?php $latitude=explode(',' ,$res["latitude"]);  $longitude=explode(',' ,$res["longitude"]); ?>
+	<?php foreach($latitude as $key => $lat1) { if($latitude[0] == $latitude[$key]) { ?>
+	
+	Latitude : <input type="text" name="latitude[]" id="latitude0"  value="<?php if(isset($lat1)){ echo $lat1;} else{ echo ''; }; ?>"  />
+    Longitude : <input type="text" name="longitude[]" id="longitude0"   value="<?php if(isset($longitude[$key])) { echo $longitude[$key];} else{ echo ''; }; ?>"/>
+		<input type="button" onclick="addFormField()" value="add" /><?php }
+		else{?> <div id=<?php echo $key; ?>'>
+		
+		<div id="MoreFile">
+	<div class="spacer"></div><div class="AdmFleft"><div id="rows<?php echo $key;?>"><div class="control-group"><div class="controls"><label for="focusedInput" class="control-label">Latitude : <input type="text" name="latitude[]" value="<?php if(isset($lat1)){ echo $lat1;} else{ echo ''; }; ?>" class="input-xlarge focused">&nbsp;<label for="focusedInput" class="control-label">Longitude : <input type="text" name="longitude[]" value="<?php if(isset($longitude[$key])) { echo $longitude[$key];} else{ echo ''; }; ?>" class="input-xlarge focused"><a onclick="removeFormField1(rows<?php echo $key;?>); return false;" href="#">DELETE</a></label></label></div></div></div></div></div>
+				<?php } } ?>
+		
+		<div id="MoreFiles">
+	</div>
+	
+	
+<script type="text/javascript" language="javascript">
+
+  var id = 1;
+  function addFormField() {
+  
+      if(id < 100){
+      
+      jQuery("#MoreFiles").append("<div class='spacer'></div><div class='AdmFleft'><div id='row"+id+"'><div class='control-group'><div class='controls'><label class='control-label' for='focusedInput'>Latitude : <input class='input-xlarge focused'  type='text' value='' name='latitude[]'>&nbsp;<label class='control-label' for='focusedInput'>Longitude : <input class='input-xlarge focused'  type='text' value='' name='longitude[]'><a href='#' onClick='removeFormField(\"#row"+id+"\"); return false;'>DELETE</a></div></div></div></div>");
+      id++;
+	  //id = (id-1) + 2;
+      //document.getElementById('id').value = id;
+     // datep();
+      }
+      else
+        alert('Limit Reached');
+      
+  }
+  function removeFormField(id) { 
+  //alert(id);
+      
+      jQuery(id).remove();
+  }
+   function removeFormField1(id) { 
+  alert(id);
+      
+      jQuery(id).remove();
+  }
+
+
+</script>
+	</td>
+-----
+edit_event_process.php 
+Same thing follow in add details....

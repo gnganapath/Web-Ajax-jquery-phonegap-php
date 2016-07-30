@@ -1,0 +1,30 @@
+
+Download fpdf latest version(v1.7 in zip file format) link is http://www.fpdf.org/
+
+Extract and paste it in your project folder and name it as "fpdf1.php"
+
+Create the php file as mentioned beolw. Run this php file will get PHP file.
+
+class creation PDF from fpdf is required. --- It's working.....
+
+
+<?php
+/*
+codes to save the user input values to db(this works fine)
+*/
+require('fpdf/fpdf.php');
+class PDF extends FPDF
+{
+//some functions
+}
+
+$pdf=new PDF();
+
+
+
+$pdf->AddPage();
+$pdf->SetFont('Arial','B',16);
+$pdf->Cell(40,10,'Hello World to kaspon pdf!');
+$pdf->Output();
+
+?>

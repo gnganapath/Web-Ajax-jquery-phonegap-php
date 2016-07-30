@@ -1,0 +1,19 @@
+<script type="text/javascript">
+function one() 
+{ 
+   document.write("hai")
+} 
+function two() 
+{ 
+   document.write("All")
+}
+
+function wrapper()
+{
+   one()
+   two()
+}
+</script>
+ <form>
+ <input type=button value="ok" onClick="wrapper()" > 
+</form>

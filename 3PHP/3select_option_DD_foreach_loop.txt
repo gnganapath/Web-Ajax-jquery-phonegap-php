@@ -1,0 +1,4 @@
+  <?php //print_r($schedule_select);?>
+								HH:MM <select style="width:50px;" name="hur1"> <?php $hou1=range(00,23); foreach($hou1 as $hours1 ) { ?><option value="<?php $hours1; ?>"><?php echo $hours1; ?></option> <?php } ?></select>
+								 : <select style="width:50px;" name="minutes1"><?php $min1=range(00,59); foreach($min1 as $minutes1 ) { ?><option value="<?php $minutes1 ?>"><?php echo $minutes1; ?></option> <?php } ?></select>
+							  

@@ -1,0 +1,22 @@
+android Text color common to all layouts
+
+
+res/vales/styles.xml ->
+
+<style name="TextColor">
+    <item name="android:textColor">#00FF00</item>
+</style>      
+
+
+
+Add the follwing line to all the textview using in all the layouts
+
+<style name="TextColor">
+    <item name="android:textColor">#00FF00</item>
+</style>      
+
+
+
+or 
+
+es you are right you can make that using style. Or you can use TextView.getTextColors().getDefaultColor() for set default text color.

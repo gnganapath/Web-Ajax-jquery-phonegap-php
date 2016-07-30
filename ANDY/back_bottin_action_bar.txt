@@ -1,0 +1,54 @@
+main.xml:
+
+<botton 
+onclick="playnow" />
+
+second.xml:
+
+layout....
+
+main.java:
+
+  public void playnow(View view){
+  // Toast.makeText(getApplicationContext(), "Play now Game", Toast.LENGTH_SHORT).show();
+  Intent intent = new Intent(main.this, second.class);
+  startActivity(intent);
+
+   }
+
+
+second.java:
+
+
+public void onCreate(Bundle savedInstanceState) {
+@SuppressLint("NewApi")
+
+
+getActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+}
+
+
+manifest.xml:
+
+<application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.listview.main">
+...
+...
+</activity>
+
+ <activity
+        android:name="com.example.listview.second"
+        android:label="@string/app_name"
+        android:parentActivityName="com.example.listview.main" >
+        <!-- The meta-data element is needed for versions lower than 4.1 -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.listview.main" />
+ </activity>

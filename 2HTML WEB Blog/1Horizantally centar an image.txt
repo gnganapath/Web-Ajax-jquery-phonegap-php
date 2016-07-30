@@ -1,0 +1,16 @@
+Horizantally centar an image with CSS working in JQM 
+
+
+ <img src="images/logo.png" alt="logo" class="center" />
+   
+ 
+<style>
+
+.center
+{
+display:block ;
+margin-left:auto ;
+margin-right:auto ;
+}
+	
+</style>

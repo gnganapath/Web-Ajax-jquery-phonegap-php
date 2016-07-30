@@ -1,0 +1,21 @@
+.val()
+
+.val() Returns: String, Array
+
+Description: Get the current value of the first element in the set of matched elements.
+
+version added: 1.0.val()
+
+The .val() method is primarily used to get the values of form elements. In the case of <select multiple="multiple"> elements, the .val() method returns an array containing each selected option.
+
+For selects and checkboxes, you can also use the :selected and :checked selectors to get at values, for example:
+
+$('select.foo option:selected').val();    // get the value from a dropdown select
+$('select.foo').val();                    // get the value from a dropdown select even easier
+$('input:checkbox:checked').val();        // get the value from a checked checkbox
+$('input:radio[name=bar]:checked').val(); // get the value from a set of radio buttons
+
+
+var v=$("#yourdropdownid option:selected").text(); drop down list display text 
+
+var v=$("#yourdropdownid option:selected").val(); drop down list value

@@ -1,0 +1,14 @@
+The color in the bar is the same as the color the text is highlighted with in the editor. It is set by going to
+
+Preferences > General > Editors > Text Editors > Annotations
+
+and changing the Occurrences and Write Occurrences colors.
+
+
+
+The bar is called the Overview Bar or Overview Ruler (in case you need to reference it) and, as has been mentioned, the color of occurences can be changed by navigating to:
+
+Window > Preferences > General > Editors > Text Editors > Annotations
+and changing the color for Occurrences.
+
+One difference to note in Eclipse Juno (most other responses seem to refer to Indigo) is that the change won't take effect until you restart the program.

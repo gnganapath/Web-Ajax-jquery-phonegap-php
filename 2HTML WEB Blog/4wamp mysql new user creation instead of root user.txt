@@ -1,0 +1,41 @@
+You can create a user using MySQL like this:
+
+mysql:>CREATE USER 'username'@'servername' IDENTIFIED BY 'password';
+and if you want to do that for a specific database, simply you can write in the MySQL:
+
+GRANT ALL PRIVILEGES ON database_name.*
+TO 'username'@'servername'
+IDENTIFIED BY 'password';
+Note that it's all one sentence, also note that you need to change:
+
+database_name // your database name
+username      // any name you want to use as username
+servername    // the name of your server, for example: localhost
+password      // any text you want to use as user password
+=========================================================================
+
+
+Set password for root phpmyadmin wamp server
+--------------------------------------------
+cmd:>mysqladmin enter
+list displyed. then
+cmd:>mysqladmin -u root password NEWPASSWORD
+
+
+Take a look at reseting the MySQL wamp server phpmyadmin root password here.
+
+mysql:>UPDATE mysql.user SET Password=PASSWORD('MyNewPass/Empty') WHERE User='root';
+FLUSH PRIVILEGES;
+
+
+
+============================================
+[or]
+
+my config.inc.php file in the phpmyadmin folder. 
+
+/* Authentication type and info */
+$cfg['Servers'][$i]['auth_type'] = 'config';
+$cfg['Servers'][$i]['user'] = 'enter_username_here';
+$cfg['Servers'][$i]['password'] = 'enter_password_here';
+$cfg['Servers'][$i]['AllowNoPasswordRoot'] = true;

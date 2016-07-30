@@ -1,0 +1,77 @@
+Regular expression is the most important part in form validations and it is widely used for search, 
+replace and web crawling systems. If you want to write a selector engine (used to find elements in a DOM),
+ it should be possible with Regular Expressions. 
+In this post we explained few tips that how to understand and write the Regular Expression in simple way.
+
+Stage 1
+Symbol             Explanation
+
+^                       Start of string
+$                       End of string
+.                        Any single character
++                       One or more character
+\                        Escape Special characters
+?                       Zero or more characters
+
+Input exactly match with “abc” 
+var A = /^abc$/;
+
+Input start with “abc”
+var B = /^abc/;
+
+Input end with “abc”
+var C = /abc$/;
+
+Input “abc” and one character allowed Eg. abcx
+var D = /^abc.$/;
+
+Input  “abc” and more than one character allowed Eg. abcxy
+var E = /^abc.+$/;
+
+Input exactly match with “abc.def”, cause (.) escaped
+var F = /^abc\.def$/;
+
+Passes any characters followed or not by “abc” Eg. abcxyz12....
+var G = /^abc.+?$/
+
+Stage 2
+
+Char                Group Explanation
+
+[abc]                 Should match any single of character
+[^abc]               Should not match any single character
+[a-zA-Z0-9]      Characters range lowercase a-z, uppercase A-Z and numbers
+[a-z-._]              Match against character range lowercase a-z and ._- special chats 
+(.*?)                  Capture everything enclosed with brackets 
+(com|info)         Input should be “com” or “info”
+{2}                   Exactly two characters
+{2,3}                Minimum 2 characters and Maximum 3 characters
+{2,}                  More than 2 characters
+
+
+Put together all in one URL validation.
+var URL = /^(http|https|ftp):\/\/(www+\.)?[a-zA-Z0-9]+\.([a-zA-Z]{2,4})\/?/;
+
+URL.test(“http://9lessons.info”);                      // pass
+URL.test(“http://www.9lessons.info”);            // pass
+URL.test(“https://9lessons.info/”);                   // pass
+URL.test(“http://9lessons.info/index.html”);    // pass
+
+Stage 3
+
+Short Form     Equivalent              Explanation 
+
+\d                      [0-9]                         Any numbers
+\D                     [^0-9]                       Any non-digits
+\w                     [a-zA-Z0-9_]            Characters,numbers and underscore
+\W                    [^a-zA-Z0-9_]          Except any characters, numbers and underscore
+\s                       -                                White space character
+\S                      -                                Non white space character
+
+
+var number = /^(\+\d{2,4})?\s?(\d{10})$/;  // validating phone number
+
+number.test(1111111111);           //pass
+number.test(+111111111111);     //pass
+number.test(+11 1111111111);    //pass
+number.test(11111111);               //Fail

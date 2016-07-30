@@ -1,0 +1,41 @@
+It's working;
+=============
+Phonegap Command promt project creation in windows OS + android project
+-----------------------------------------------------------------------
+
+In command promt: locate to phonegap folder
+open cmd type 3 cmd1,2,3> for create project
+cmd1>
+
+E:\phonegap.2.3.0\lib\android\bin>create E:\<name>hrms com.hrms hrms <enter>
+Microsoft (R) Windows Script Host Version 5.8
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Creating new android project...
+Copying template files...
+Copying js, jar & config.xml files...
+Copying cordova command tools...
+Updating AndroidManifest.xml and Main Activity...
+
+created successfully
+If project already exist means change project name or package or project location <folder directory>.
+cmd2>
+cd E:\hrms
+cmd3>E:\hrms>dir
+
+Microsoft (R) Windows Script Host Version 5.8
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Creating new android project...
+Copying template files...
+Copying js, jar & config.xml files...
+Copying cordova command tools...
+Updating AndroidManifest.xml and Main Activity...
+
+
+E:\phonegap.2.3.0\lib\android\bin>E:\<name>hrms\cordova\build.bat <enter>
+
+build file created with debug apk creator command is above 
+
+
+E:\phonegap.2.3.0\lib\android\bin>E:\<name>hrms\cordova/run.bat <enter>

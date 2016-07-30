@@ -1,0 +1,48 @@
+jquery $.each() for objects
+=============================
+method:1
+----------
+<script>
+    $(document).ready(function() {
+        var data = { "programs": [ { "name":"zonealarm", "price":"500" }, { "name":"kaspersky", "price":"200" } ] };
+        $.each(data.programs[0], function(key,val) {
+            alert(key+val);
+        });
+    });
+</script>
+
+
+method:2
+---------
+<script>
+var data = { "programs": [ { "name":"zonealarm", "price":"500" }, { "name":"kaspersky", "price":"200" } ] };
+
+$.each(data.programs, function(i) {
+  $.each(data.programs[i], function(key,val) {
+    alert(key+val);
+  })
+});
+</script>
+
+
+method:3
+----------
+
+<script>
+$.each(data.programs, function(i, currProgram) {
+  $.each(currProgram, function(key,val) {
+    alert(key+val);
+  })
+});
+</script>
+
+method:4
+----------
+<script>     
+    $(document).ready(function() {         
+        var data = { "programs": [ { "name":"zonealarm", "price":"500" }, { "name":"kaspersky", "price":"200" } ] };         
+        $.each(data.programs, function(key,val) {             
+            alert(key+val);         
+        });     
+    }); 
+</script> 

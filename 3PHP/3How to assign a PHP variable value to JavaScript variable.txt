@@ -1,0 +1,27 @@
+How to assign a PHP variable value to JavaScript variable
+
+In javascript with echo version: var name1= "'.$name.'";
+
+<?php
+$name = "anurag singh";
+echo '
+    <html>
+        <head>
+        <script type="text/javascript" src="jquery-2.0.2.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var name1= "'.$name.'";
+                $.post("main_page.php",{input1: name1}, function(msg){
+                    alert("hi "+msg);
+                });
+            });
+        </script>
+        </head>
+
+        <body>
+            <h1>This is the demo!</h1>
+            <h2>In echo we can add more than one statements</h2>
+        </body>
+    </html>
+    ';
+?>

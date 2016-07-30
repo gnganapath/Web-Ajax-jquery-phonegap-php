@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>OffLine Storage</title>
+<script src="http://www.google.com/jsapi"></script>
+<script>
+      google.load("jquery", "1.4.1");
+</script>
+<script>
+      var db = window.openDatabase("Student", "", "Previous Course", 1024*1000);
+
+      function insertSubject(subject_one, subject_two, course_id, email) {
+
+       db.transaction(function(tx) {
+          tx.executeSql('INSERT INTO Course (course_id, subject_one, subject_two, email) VALUES (?, ?, ?, ?)', [course_id, subject_one, subject_two, email]);
+       });
+      }
+
+      function renderResults(tx, rs) {
+          e = $('#previous_course');
+          e.html("");
+          for(var i=0; i < rs.rows.length; i++) {
+            r = rs.rows.item(i);
+            e.html(e.html() + 'id: ' + r['id'] + ', subject_one: ' + r['subject_one'] + ', subject_two: ' + r['subject_two'] + ', email: ' + r['email'] + '<br />');
+          }
+        }
+        function displayData(email) {
+          db.transaction(function(tx) {
+            if (!(email === undefined)) {
+              tx.executeSql('SELECT * FROM Course WHERE email = ?', [email], renderResults);
+            } else {
+              tx.executeSql('SELECT * FROM Course', [], renderResults);
+            }
+          });
+        }
+        $(document).ready(function() {
+
+         db.transaction(function(tx) {
+                 tx.executeSql('CREATE TABLE IF NOT EXISTS Course(id INTEGER PRIMARY KEY, course_id INTEGER, subject_one TEXT, subject_two TEXT, email TEXT)', []);
+               });
+               $('#course_form').submit(function() {
+                course = { 1: $('#subject1').val(), 2: $('#subject2').val() };
+                insertSubject($('#subject1').val(), $('#subject2').val(), 1, $('#email').val());
+                displayData();
+            return false;
+          });
+              displayData();
+        });
+    </script>
+</head>
+<body>
+<form method="get" id="course_form">
+<div>
+<label for="1">Subject 1</label> <input type="text" value=""
+id="subject1" name="subject1" placeholder="subject" />
+</div>
+<div>
+<label for="2">Subject 2</label> <input type="text" value=""
+id="subject2" name="subject2" placeholder="subject" />
+</div>
+<div>
+<input type="email" id="email" placeholder="Enter your email address"
+size="40" />
+</div>
+<div>
+<input type="submit" value="Upload Data" />
+<input type="button" value="Fetch" onChange="displayData(email);" />
+</div>
+</form>
+<div>
+<h2>Previous Course</h2>
+</div>
+<div id="previous_course"></div>
+</body>
+</html>
+<!--
+
+table created: file one script
+-----------------------------
+ <script src="http://www.google.com/jsapi"></script>
+    <script>
+      google.load("jquery", "1.4.1");
+    </script>
+    <script>
+      var db = window.openDatabase("Student", "", "Previous Course", 1024*1000);
+      $(document).ready(function() {
+        db.transaction(function(tx) {
+          tx.executeSql('CREATE TABLE IF NOT EXISTS Course(id INTEGER PRIMARY KEY, course_id INTEGER, subject_one TEXT, subject_two TEXT, email TEXT)', []);
+        });
+      });
+    </script>
+    
+    
+insert data feilds; File two script
+------------------------------------
+<script>
+      var db = window.openDatabase("Student", "", "Previous Course", 1024*1000);
+
+      function insertSubject(subject_one, subject_two, course_id, email) {
+       db.transaction(function(tx) {
+          tx.executeSql('INSERT INTO Course (course_id, subject_one, subject_two, email) VALUES (?, ?, ?, ?)', [course_id, subject_one, subject_two, email]);
+       });
+      }
+
+      $(document).ready(function() {
+        db.transaction(function(tx) {
+          tx.executeSql('CREATE TABLE IF NOT EXISTS Course(id INTEGER PRIMARY KEY, course_id INTEGER, subject_one TEXT, subject_two TEXT, email TEXT)', []);
+        });
+
+        $('#course_form').submit(function() {
+         course = { 1: $('#subject1').val(), 2: $('#subject2').val() };
+          
+           insertSubject($('#subject1').val(), $('#subject2').val(), 1, $('#email').val());
+
+          return false;
+        });
+      });
+    </script>
+    
+ Fetch data file automatically: file three script
+ -------------------------------------------------
+ 
+ <script src="http://www.google.com/jsapi"></script>
+<script>
+      google.load("jquery", "1.4.1");
+</script>
+<script>
+      var db = window.openDatabase("Student", "", "Previous Course", 1024*1000);
+
+      function insertSubject(subject_one, subject_two, course_id, email) {
+
+       db.transaction(function(tx) {
+          tx.executeSql('INSERT INTO Course (course_id, subject_one, subject_two, email) VALUES (?, ?, ?, ?)', [course_id, subject_one, subject_two, email]);
+       });
+      }
+
+      function renderResults(tx, rs) {
+          e = $('#previous_course');
+          e.html("");
+          for(var i=0; i < rs.rows.length; i++) {
+            r = rs.rows.item(i);
+            e.html(e.html() + 'id: ' + r['id'] + ', subject_one: ' + r['subject_one'] + ', subject_two: ' + r['subject_two'] + ', email: ' + r['email'] + '<br />');
+          }
+        }
+        function displayData(email) {
+          db.transaction(function(tx) {
+            if (!(email === undefined)) {
+              tx.executeSql('SELECT * FROM Course WHERE email = ?', [email], renderResults);
+            } else {
+              tx.executeSql('SELECT * FROM Course', [], renderResults);
+            }
+          });
+        }
+        $(document).ready(function() {
+
+         db.transaction(function(tx) {
+                 tx.executeSql('CREATE TABLE IF NOT EXISTS Course(id INTEGER PRIMARY KEY, course_id INTEGER, subject_one TEXT, subject_two TEXT, email TEXT)', []);
+               });
+               $('#course_form').submit(function() {
+                course = { 1: $('#subject1').val(), 2: $('#subject2').val() };
+                insertSubject($('#subject1').val(), $('#subject2').val(), 1, $('#email').val());
+                displayData();
+            return false;
+          });
+               displayData();
+        });
+    </script>
+ -->

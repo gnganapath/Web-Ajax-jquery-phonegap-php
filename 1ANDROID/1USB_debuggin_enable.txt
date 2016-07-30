@@ -1,0 +1,19 @@
+USB dubugging enable for new android mobile - Asus zenfone
+
+http://firstandgeek.com/developer-option-usb-debugging-asus-zenfone-5/
+
+Go to Settings
+
+Click on About
+
+Then Choose Software Information
+
+
+Tap the Build Number for nearly 10 times, so that for each press, it shows you are near to the developer option. Continue until it unlocks the developer option for you.
+
+
+After that go to the Settings page again. At the bottom, You could see the developer option as following.
+
+Inside the developer option, there is USB debugging option.
+
+Not only the USB debugging feature, but also Stake Away, Mock Location Allowing, Force RTL layout direction, animation scale, GPU rendering, Strict mode etc can be accessed by simply enabling this Developer option. As I owned Zenfone now, more Zenfone tips and tricks will be updated soon. if you have any problems regarding your Zenfone, kindly mail me and I will give you the answer.

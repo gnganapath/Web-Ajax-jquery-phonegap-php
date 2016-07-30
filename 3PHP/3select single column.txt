@@ -1,0 +1,4 @@
+
+$post_like_id=mysql_query("SELECT * FROM `post_answer` WHERE `postid` = '$questionID'");
+$post_answer = mysql_fetch_array($post_like_id);
+$like=$post_answer['p_id'];

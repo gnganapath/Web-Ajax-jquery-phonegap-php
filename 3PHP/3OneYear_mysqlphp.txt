@@ -1,0 +1,15 @@
+To add one year to todays date use the following:
+
+$oneYearOn = date('Y-m-d',strtotime(date("Y-m-d", mktime()) . " + 365 day"));
+
+For the other examples you must initialize $StartingDate with a timestamp value for example:
+
+$StartingDate = mktime();  // todays date as a timestamp
+
+Try this
+
+$newEndingDate = date("Y-m-d", strtotime(date("Y-m-d", strtotime($StaringDate)) . " + 365 day"));
+
+or
+
+$newEndingDate = date("Y-m-d", strtotime(date("Y-m-d", strtotime($StaringDate)

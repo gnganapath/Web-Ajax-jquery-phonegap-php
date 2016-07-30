@@ -1,0 +1,344 @@
+PHP Web Development Tips and Tricks
+==================================
+
+There are a number of tricks that can make your life easier and help you to squeeze the last bit of performance from your scripts. These tricks won't make your web applications much faster, but can give you that little edge in performance you may be looking for. More importantly it may give you insight into how PHP internals works allowing you to write code that can be executed in more optimal fashion by the Zend Engine. 
+
+1. Static methods
+
+If a method can be declared static, declare it static. Speed improvement is by a factor of 4. 
+
+2. echo() vs. print()
+
+Even both of these output mechanism are language constructs, if you benchmark the two you will quickly discover that print() is slower then echo(). The reason for that is quite simple, print function will return a status indicating if it was successful or not (note: it does not return the size of the string), while echo simply print the text and nothing more. Since in most cases this status is not necessary and is almost never used it is pointless and simply adds unnecessary overhead.
+view plaincopy to clipboardprint?
+echo( 'Hello World' );    
+// is better than    
+print( 'Hello World' );    
+
+3. echo's multiple parameters
+
+Use echo's multiple parameters instead of string concatenation. It's faster.
+view plaincopy to clipboardprint?
+echo 'Hello', ' ', 'World';    
+// is better than    
+echo 'Hello' . ' ' . 'World';   
+Read more...
+
+4. Avoid the use of printf
+
+Using printf() is slow for multitude of reasons and I would strongly discourage it's usage unless you absolutely need to use the functionality this function offers. Unlike print and echo printf() is a function with associated function execution overhead. More over printf() is designed to support various formatting schemes that for the most part are not needed in a language that is typeless and will automatically do the necessary type conversions. To handle formatting printf() needs to scan the specified string for special formatting code that are to be replaced with variables. As you can probably imagine that is quite slow and rather inefficient.
+view plaincopy to clipboardprint?
+echo 'Result:', $result;    
+// is better than    
+printf( "Result: %s", $result );    
+
+5. Single quotes vs. double quotes
+
+In PHP there is a difference when using either single or double quotes, either ‘ or “. If you use double quotes ” then you are telling the code to check for a variable. If you are using single quotes ‘ then you are telling it to print whatever is between them. This might seem a bit trivial, but if you use the double quotes instead of the single quotes, it will still output correctly, but you will be wasting processing time.
+view plaincopy to clipboardprint?
+echo 'Result: ' . $var;    
+// is better than    
+echo "Result: $var";  
+Even the use of sprintf instead of variables contained in double quotes, it’s about 10x faster.
+
+Read more...
+
+6. Methods in derived classes vs. base classes
+
+Methods in derived classes run faster than ones defined in the base class.
+
+7. Accessing arrays
+
+e.g. $row['id'] is 7 times faster than $row[id]
+
+8. Do not implement every data structure as a class
+
+Not everything has to be OOP, often it is too much overhead, each method and object call consumes a lot of memory. For this reason, do not implement every data structure as a class, arrays are useful, too.
+
+9. Avoid functions inside loops
+
+Try to use functions outside loops. Otherwise the function may get called each time. 
+view plaincopy to clipboardprint?
+// e.g. In PHP for loop with a count() inside the control   
+// block will be executed on EVERY loop iteration.   
+$max = count( $array );    
+for( $i = 0; $i < $max; $i++ )    
+{    
+    // do something    
+}    
+    
+// is better than    
+    
+for( $i = 0; $i < count( $array ); $i++ )    
+{    
+    // do something    
+}  
+It's even faster if you eliminate the call to count() AND the explicit use of the counter by using a foreach loop in place of the for loop.
+view plaincopy to clipboardprint?
+foreach ($array as $i) {  
+    // do something    
+}  
+Read more...
+
+Note: A function call with one parameter and an empty function body takes about the same time as doing 7-8 $localvar++ operations. A similar method call is of course about 15 $localvar++ operations.
+
+10. ?> <?
+
+When you need to output a large or even a medium sized static bit of text it is faster and simpler to put it outside the of PHP. This will make the PHP's parser effectively skip over this bit of text and output it as is without any overhead. You should be careful however and not use this for many small strings in between PHP code as multiple context switches between PHP and plain text will ebb away at the performance gained by not having PHP print the text via one of it's functions or constructs.
+
+11. isset instead of strlen
+
+When working with strings and you need to check that the string is either of a certain length you'd understandably would want to use the strlen() function. This function is pretty quick since it's operation does not perform any calculation but merely return the already known length of a string available in the zval structure (internal C struct used to store variables in PHP). However because strlen() is a function it is still somewhat slow because the function call requires several operations such as lowercase & hashtable lookup followed by the execution of said function. In some instance you can improve the speed of your code by using a isset() trick.
+view plaincopy to clipboardprint?
+if (!isset($foo{5})) { echo "Foo is too short"; }  
+// is better than  
+if (strlen($foo) < 5) { echo "Foo is too short"; }  
+Calling isset() happens to be faster then strlen() because unlike strlen(), isset() is a language construct and not a function meaning that it's execution does not require function lookups and lowercase. This means you have virtually no overhead on top of the actual code that determines the string's length.
+
+12. true is faster than TRUE
+
+This is because when looking for constants PHP does a hash lookup for name as is. And since names are always stored lowercased, by using them you avoid 2 hash lookups. Furthermore, by using 1 and 0 instead of TRUE and FALSE, can be considerably faster.
+
+13. Incrementing or decrementing the value of the variable
+
+When incrementing or decrementing the value of the variable $i++ happens to be a tad slower then ++$i. This is something PHP specific and does not apply to other languages. ++$i happens to be faster in PHP because instead of 4 opcodes used for $i++ you only need 3. Post incrementation actually causes in the creation of a temporary var that is then incremented. While pre-incrementation increases the original value directly. This is one of the optimization that opcode optimized like Zend's PHP optimizer. It is a still a good idea to keep in mind since not all opcode optimizers perform this optimization and there are plenty of ISPs and servers running without an opcode optimizer. 
+
+Additionally,
+
+1. Incrementing a local variable in a method is the fastest. Nearly the same as calling a local variable in a function. 
+
+2. Incrementing a global variable is 2 times slower than a local variable. 
+
+3. Incrementing an object property (eg. $this->prop++) is 3 times slower than a local variable. 
+
+4. Incrementing an undefined local variable is 9-10 times slower than a pre-initialized one.
+
+Read more ... and more...
+
+14. Replace regex calls with ctype extension, if possible
+
+Many scripts tend to reply on regular expression to validate the input specified by user. While validating input is a superb idea, doing so via regular expression can be quite slow. In many cases the process of validation merely involved checking the source string against a certain character list such as A-Z or 0-9, etc... Instead of using regex in many instances you can instead use the ctype extension (enabled by default since PHP 4.2.0) to do the same. The ctype extension offers a series of function wrappers around C's is*() function that check whether a particular character is within a certain range. Unlike the C function that can only work a character at a time, PHP function can operate on entire strings and are far faster then equivalent regular expressions.
+view plaincopy to clipboardprint?
+ctype_digit($foo);  
+// is better than  
+preg_match("![0-9]+!", $foo);  
+
+15. isset vs. in_array and array_key_exists
+
+Another common operation in PHP scripts is array searching. This process can be quite slow as regular search mechanism such as in_array() or manual implementation work by iterating through the entire array. This can be quite a performance hit if you are searching through a large array or need to perform the searches frequently. So what can you do? Well, you can do a trick that relies upon the way that Zend Engine stores array data. Internally arrays are stored inside hash tables when they array element (key) is the key of the hashtables used to find the data and result is the value associated with that key. Since hashtable lookups are quite fast, you can simplify array searching by making the data you intend to search through the key of the array, then searching for the data is as simple as $value = isset($foo[$bar])) ? $foo[$bar] : NULL;. This searching mechanism is way faster then manual array iteration, even though having string keys maybe more memory intensive then using simple numeric keys.
+view plaincopy to clipboardprint?
+$keys = array("apples"=>1, "oranges"=>1, "mangoes"=>1);  
+if (isset($keys['mangoes'])) { ... }  
+  
+// is roughly 3 times faster then  
+  
+$keys = array("apples", "oranges", "mangoes");  
+if (in_array('mangoes', $keys)) { ... }  
+  
+// isset is also faster then  
+if(array_key_exists('mangoes', $keys)) { ... }  
+Note: However the lookup times don't diverge until you've got a very considerable amount of data in your array. e.g. If you have just 2-3 entries in your array, it will take more time to hash the values and perform the lookup than it would take to perform a simple linear search ( O( n ) vs. O( log n ) ) 
+
+16. Free unnecessary memory
+
+Unset your variables to free memory, especially large arrays.
+
+17. Specify full paths
+
+Use full paths in includes and requires, less time spent on resolving the OS paths. 
+view plaincopy to clipboardprint?
+include( '/var/www/html/your_app/database.php' );    
+//is better than    
+include( 'database.php' );   
+Read more...
+
+18. regex vs. strncasecmp, strpbrk and stripos
+
+See if you can use strncasecmp, strpbrk and stripos instead of regex, since regex is usually slower.
+
+19. str_replace vs. preg_replace vs. strtr
+
+The str_replace is better than preg_replace, but strtr is better than str_replace by a factor of 4.
+
+20. select vs. multi if and else if statements
+
+It’s better to use select statements than multi if, else if statements. 
+view plaincopy to clipboardprint?
+switch( $name )  
+  {  
+   case 'aaa':  
+   // do something  
+   break;  
+  
+   case 'bbb':  
+   // do something  
+   break;  
+  
+   case 'ccc':  
+   // do something  
+   break;  
+  
+   default:  
+   // do something  
+   break;  
+  }  
+  
+  // is better than  
+  
+  if( $name == 'aaa' )  
+  {  
+   // do something  
+  }  
+  else if( $name == 'bbb' )  
+  {  
+   // do something  
+  }  
+  else if( $name == 'ccc' )  
+  {  
+   // do something  
+  }  
+  else  
+  {  
+   // do something  
+  }  
+Read more...
+
+21. Error suppression with @ is very slow
+
+view plaincopy to clipboardprint?
+$name = isset( $id ) : 'aaa' : NULL;    
+//is better than    
+$name = @'aaa';   
+Read more...
+
+22. Boolean Inversion
+
+Most of the time, inverting a boolean value is as simple as using the logical ‘not’ operator e.g. false = !true. That’s easy enough, but occasionally you might find yourself working with integer-type booleans instead, with 1s and 0s in the place of true and false; in that case, here’s a short PHP snippet that does the same thing:
+view plaincopy to clipboardprint?
+$true = 1;  
+$false = 1 - $true;  
+$true = 1 - $false;  
+The same principle can be used any time you want to toggle an integer between two values e.g. between 2 and 5:
+view plaincopy to clipboardprint?
+$val = 5;  
+$val = 7 - $val; // now it's 2...  
+$val = 7 - $val; // and now it's 5 again  
+
+23. isset($var, $var, …)
+
+Useful little thing, this - you can check the state of multiple variables within a single PHP isset() construct, like so:
+view plaincopy to clipboardprint?
+$foo = $bar = 'are set';  
+isset($foo, $bar); // true  
+isset($foo, $bar, $baz); // false  
+isset($baz, $foo, $bar); // false  
+On a related note, in case you’re not already aware of this, isset actually sees null as being not set:
+view plaincopy to clipboardprint?
+$list = array('foo' => 'set', 'bar' => null);  
+isset($list['foo']); // true, as expected  
+isset($list['bar']); // false!  
+In situations like the above, it’s more reliable to use array_key_exists().
+
+24. Modulus Operator
+
+During a loop, it’s a fairly common need to perform a specific routine every n-th iteration. The modulus operator is extremely helpful here - it’ll divide the first operand by the second and return the remainder, to create a useful, cyclic sequence:
+view plaincopy to clipboardprint?
+for ($i = 0; $i < 10; ++$i)  
+{  
+    echo $i % 4, ' ';  
+}  
+// outputs 0 1 2 3 0 1 2 3 0 1  
+
+25. http_build_query
+
+This function turns a native array into a nicely-encoded query string. Furthermore, this native function is configurable and fully supports nested arrays.
+
+26. <input name="foo[bar]" />
+
+HTML + PHP are quite capable of handling form fields as arrays. This one’s particularly helpful when dealing with multiple checkboxes since the selected values can be automatically pushed into an indexed (or associative) array, rather than having to capture them yourself.
+
+27. get_browser()
+
+Easily get your hands on the users browser-type. Some leave this process to the browser end but can be useful to get this info server side.
+
+28. debug_print_backtrace()
+
+I use this one a lot, print a debug-style list of what was called to get the the point where this function is called.
+
+29. Automatic optimization for your database
+
+Just like you need to defrag and check your file system, it’s important to do the same thing with SQL tables. If you don’t, you might end up with slow and corrupted database tables. 
+
+Furthermore, you will probably add and delete tables from time to time. Therefore, you want a solution that works no matter how your database looks like. For this, you can use this PHP script that finds all your tables, and then perform Optimize on every single one. Then a good idea can be to do this every night (or whenever your server is least accessed) with “cron” because you don’t want to delay your surfers to much.
+view plaincopy to clipboardprint?
+dbConnect()  
+$tables = mysql_query("SHOW TABLES");  
+  
+while ($table = mysql_fetch_assoc($tables))  
+{  
+   foreach ($table as $db => $tablename)  
+   {  
+       mysql_query("OPTIMIZE TABLE '".$tablename."'")  
+           or die(mysql_error());  
+   }  
+}  
+
+30. require() vs. require_once()
+
+Use require() instead of require_once() where possible. 
+
+Read more...
+
+31. Check System Calls
+
+A common mistake with Apache
+view plaincopy to clipboardprint?
+/usr/sbin/apache2 -X &  
+strace -p 16367 -o sys1.txt   
+grep stat sys1.txt | grep -v fstat | wc -l  
+...  
+index.html (No such file or directory)  
+index.cgi  (No such file or directory)  
+index.pl   (No such file or directory)  
+index.php ...  
+Fix DirectoryIndex
+view plaincopy to clipboardprint?
+<Directory /var/www>  
+    DirectoryIndex index.php  
+</Directory>  
+
+32. Secure HTTP connections
+
+You can force a secure HTTP connection using the following code,
+view plaincopy to clipboardprint?
+if (!($HTTPS == "on")) {  
+   header ("Location: https://$SERVER_NAME$php_SELF");  
+   exit;  
+}  
+
+33. Avoid magic like __get, __set, __autoload
+
+_get() and __set() will provide a convenience mechanism for us to access the individual entry properties, and proxy to the other getters and setters. They also will help ensure that only properties we whitelist will be available in the object. This obviously carries a small cost. Also, __autoload will affect your code more less in the same way as require_once. 
+
+
+================================================================================
+
+1 - Require, Include and _once
+-----------------------------------
+Finally, you probably already use one of the following as you code your PHP scripts:
+
+include()
+require()
+include_once()
+require_once()
+But do you know the difference? The differences are important, so let me explain:
+
+include() will attempt to include the file, but if it fails PHP will just produce a warning, and continue to execute the script (as best it can) regardless. This is safer if you nonchalantly include files regardless of whether they are actually needed / exist.
+require() will attempt to include the file, but fail with a fatal error should it have a problem when trying to get the file. I like this method, as the PHP will stop executing immediately and bug out if the file is not loaded correctly (for whatever reason).
+includeonce() / requireonce() you should really try to avoid using. The benefits of using the _once method is that you know, for sure, that you're not including the same file twice. However - this is much much slower than just writing semantic code and not relying on the fact you might have included the file more than once.
+Basically, using require() is probably the best practise, as it is faster than the _once methods, and you should be writing clean, semantic, code these days that don't rely on PHP fallbacks such as include().
+
+
+
+
+========================================================================================

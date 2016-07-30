@@ -1,0 +1,97 @@
+soln:1
+<listview
+
+android:listSelector="@android:color/transparent" 
+android:cacheColorHint="@android:color/transparent"
+/>
+
+soln:2 
+<listview
+android:focusable="false"
+android:focusableInTouchMode="false"
+android:clickable="false"
+/>
+
+-------------------------------------------
+
+
+Border and background color in android xml
+
+
+
+Create a file called customborder.xml in your drawable folder:
+
+<?xml version="1.0" encoding="UTF-8"?>
+ <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+   <corners android:radius="20dp"/> 
+   <padding android:left="10dp" android:right="10dp" android:top="10dp" android:bottom="10dp"/>
+   <solid android:color="#CCCCCC"/>
+ </shape>
+Now apply it as a background to your smaller layout:
+
+<LinearLayout android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/customborder">
+
+---------------------------------------------
+
+
+Soln : 3
+
+Align two TextViews, one left the other right, on a ListView without stretching the backgrounds :
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/text_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/bubble_purple"
+        android:gravity="center" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/text_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/text_right"
+        android:background="@drawable/bubble_blue"
+        android:gravity="center" >
+    </TextView>
+</RelativeLayout>
+
+
+	--or-
+
+  For Linear Layout :
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal" >
+
+<TextView
+    android:id="@+id/text_right"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.5"
+    android:background="@drawable/bubble_blue"
+    android:text="2"
+    android:gravity="center" >
+</TextView>
+
+<TextView
+    android:id="@+id/text_left"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="0.5"
+    android:background="@drawable/bubble_purple"
+    android:text="9"
+    android:gravity="center" >
+</TextView>
+</LinearLayout>

@@ -1,0 +1,15 @@
+Nav bar - mouse over- show name of current tab/page show
+
+<a href="index.html" title="Home" ></a>
+
+
+ <ul class="nav">
+	        <li><a href="index.html" title="Home">Home</a></li>
+            <li><a href="advisoryboard.html">Advisory Board</a></li>
+	  	    <li><a href="editorialboard.html">Editorial Board</a></li>
+            <li><a href="instructionstoauthor.html">Instructions to Author</a></li>
+	  		<li  class="active"><a href="indexing_listing.html">Indexing And Listing</a></li>   
+            <li><a href="current_issues.html">Current Issue</a></li>
+	  	    <li><a href="archives.html">Archives</a></li>
+	  		<li><a href="contactus.html">Contact Us</a></li>
+      </ul>

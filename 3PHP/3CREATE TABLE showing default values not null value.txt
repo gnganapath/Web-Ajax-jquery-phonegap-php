@@ -1,0 +1,27 @@
+How-To MySQL CREATE TABLE Example showing default values, NULL values and comments
+
+Soln:=>
+PHPmyAdmin:
+Table column def time, Under Dropdown Default column As defined Additional text field apprear add their 'default text sting' values or  '123123' numberic  values
+
+soln in web (Coding part):=>
+
+Posted on March 7, 2009 by Kevin	
+
+This example shows how to set default values for each column — as well as how to allow (or not allow) NULL values in the column. By default, any column can contain NULL values.
+
+(Note that we’re also using “CREATE TABLE IF NOT EXISTS” so an error doesn’t get thrown if the table already exists when we try to create it.)
+
+We’ve added comments as well, though we’ll explain those after.
+
+/*
+ Create the table foo.example_02 if it doesn't exist.
+*/
+CREATE TABLE IF NOT EXISTS `foo`.`example_02` (
+ `field_1` VARCHAR(255) NOT NULL DEFAULT '',
+ `field_2` CHAR(20) NOT NULL default 'default_text',
+ `field_3` INT(10) DEFAULT NULL,
+ `field_4` BIGINT(20),
+ `field_5` DATETIME          -- embed a comment in the definition like this...
+);
+
